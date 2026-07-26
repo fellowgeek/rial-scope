@@ -1,0 +1,8 @@
+/data/rates.db
+/data/rates.db-journal
+/data/rates.db-wal
+/data/rates.db-shm
+
+.DS_Store
+*.log
+/.vscode/
