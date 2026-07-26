@@ -35,10 +35,10 @@ class ApiEndpointTest
 
         foreach ([
             ['2010-01-01', 10254.17647000, 'annual', 'historic.csv'],
-            ['2011-11-26', 13700, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2012-01-01', 17400, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2024-03-17', 603510, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2024-03-20', 605000, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
+            ['2011-11-26', 13700, 'daily', 'current.csv'],
+            ['2012-01-01', 17400, 'daily', 'current.csv'],
+            ['2024-03-17', 603510, 'daily', 'current.csv'],
+            ['2024-03-20', 605000, 'daily', 'current.csv'],
         ] as [$date, $rate, $granularity, $source]) {
             $stmt->execute(['date' => $date, 'rate' => $rate, 'granularity' => $granularity, 'source' => $source]);
         }

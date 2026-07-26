@@ -26,12 +26,12 @@ class RateRepositoryTest
             ['2009-01-01', 9864.30245600, 'annual', 'historic.csv'],
             ['2010-01-01', 10254.17647000, 'annual', 'historic.csv'],
             // Deliberate ~695 day coverage gap between annual and daily datasets.
-            ['2011-11-26', 13700, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2011-11-27', 13440, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2011-11-28', 13350, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
+            ['2011-11-26', 13700, 'daily', 'current.csv'],
+            ['2011-11-27', 13440, 'daily', 'current.csv'],
+            ['2011-11-28', 13350, 'daily', 'current.csv'],
             // 2011-11-29 (weekend) intentionally missing.
-            ['2011-11-30', 13580, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
-            ['2011-12-03', 13638, 'daily', 'Dollar_Rial_Price_Dataset.csv'],
+            ['2011-11-30', 13580, 'daily', 'current.csv'],
+            ['2011-12-03', 13638, 'daily', 'current.csv'],
         ];
 
         foreach ($fixtures as [$date, $rate, $granularity, $source]) {

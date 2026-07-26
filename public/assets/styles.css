@@ -274,6 +274,15 @@ main {
     }
 }
 
+.result-summary {
+    margin: 1rem 0 0;
+    padding-top: 0.85rem;
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
 .badge-fallback {
     display: inline-block;
     margin-top: 0.3rem;
@@ -290,6 +299,12 @@ main {
     gap: 1rem;
     flex-wrap: wrap;
     margin-bottom: 1.25rem;
+}
+
+.history-controls .btn-secondary {
+    /* Override the form-context align-self: flex-start so the button's
+       bottom edge lines up with the date inputs' bottom edge. */
+    align-self: flex-end;
 }
 
 .chart-wrapper {

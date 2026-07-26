@@ -29,7 +29,7 @@ usd-irr/
 ├── data/
 │   └── .gitkeep                 # SQLite database storage directory (rates.db ignored)
 ├── docs/
-│   ├── Dollar_Rial_Price_Dataset.csv # 3,908-row daily dataset (Canonical: Close Price)
+│   ├── current.csv # 3,908-row daily dataset (Canonical: Close Price)
 │   └── historic.csv             # 61-row annual dataset (1950–2010)
 ├── public/
 │   ├── api/
@@ -69,7 +69,7 @@ Set up the PHP entry point, static CSS/JS directories, third-party vendor assets
 
 Implement SQLite schema setup in `src/Database.php` and an importer script in `bin/import_rates.php`.
 
-* Parse `docs/historic.csv` (annual resolution) and `docs/Dollar_Rial_Price_Dataset.csv` (daily resolution).
+* Parse `docs/historic.csv` (annual resolution) and `docs/current.csv` (daily resolution).
 * Canonical date format: `YYYY-MM-DD` (Gregorian ISO).
 * Canonical rate field: `Close Price` stored as `rate_irr_per_usd`.
 * Clean mixed date separators, cast `-` or missing metrics to `NULL`, and retain original Persian date strings as optional metadata.

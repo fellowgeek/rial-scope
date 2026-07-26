@@ -178,7 +178,36 @@
         return '—';
     }
 
-    function renderRevalueResult(payload) {
+    function pctPhrase(deltaPercent) {
+        return deltaPercent === null ? '' : ` (${formatNumber(Math.abs(deltaPercent))}%)`;
+    }
+
+    function buildRevalueSummary(amount, dateA, dateB, revalue) {
+        const amountText = formatNumber(amount, 0);
+        const magnitude = `$${formatNumber(Math.abs(revalue.delta_usd))}${pctPhrase(revalue.delta_percent)}`;
+
+        if (revalue.delta_usd > 0) {
+            return `${amountText} IRR bought $${formatNumber(revalue.usd_at_a)} on ${formatDateForDisplay(dateA.applied_date)} but bought $${formatNumber(revalue.usd_at_b)} on ${formatDateForDisplay(dateB.applied_date)} — a gain of ${magnitude} in USD terms, meaning the Rial strengthened against the US Dollar over this period.`;
+        }
+        if (revalue.delta_usd < 0) {
+            return `${amountText} IRR bought $${formatNumber(revalue.usd_at_a)} on ${formatDateForDisplay(dateA.applied_date)} but only buys $${formatNumber(revalue.usd_at_b)} on ${formatDateForDisplay(dateB.applied_date)} — a loss of ${magnitude} in USD terms, meaning the Rial weakened against the US Dollar over this period.`;
+        }
+        return `${amountText} IRR was worth $${formatNumber(revalue.usd_at_a)} on both ${formatDateForDisplay(dateA.applied_date)} and ${formatDateForDisplay(dateB.applied_date)} — its USD purchasing power did not change over this period.`;
+    }
+
+    function buildCompareSummary(dateA, dateB, compareItems) {
+        const magnitude = `$${formatNumber(Math.abs(compareItems.delta_usd))}${pctPhrase(compareItems.delta_percent)}`;
+
+        if (compareItems.delta_usd > 0) {
+            return `Item A cost $${formatNumber(compareItems.usd_a)} on ${formatDateForDisplay(dateA.applied_date)}, while Item B cost $${formatNumber(compareItems.usd_b)} on ${formatDateForDisplay(dateB.applied_date)} — Item B is ${magnitude} more expensive in real US Dollar terms.`;
+        }
+        if (compareItems.delta_usd < 0) {
+            return `Item A cost $${formatNumber(compareItems.usd_a)} on ${formatDateForDisplay(dateA.applied_date)}, while Item B cost $${formatNumber(compareItems.usd_b)} on ${formatDateForDisplay(dateB.applied_date)} — Item B is ${magnitude} cheaper in real US Dollar terms.`;
+        }
+        return `Both items cost the same, $${formatNumber(compareItems.usd_a)}, in real US Dollar terms despite the different Rial prices and dates.`;
+    }
+
+    function renderRevalueResult(payload, amount) {
         const box = document.getElementById('revalue-result');
         const { date_a, date_b, revalue } = payload;
         const pctClass = deltaClass(revalue.delta_percent ?? 0);
@@ -206,6 +235,7 @@
                     <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
                 </div>
             </div>
+            <p class="result-summary">${buildRevalueSummary(amount, date_a, date_b, revalue)}</p>
         `;
         box.hidden = false;
     }
@@ -238,6 +268,7 @@
                     <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
                 </div>
             </div>
+            <p class="result-summary">${buildCompareSummary(date_a, date_b, compare_items)}</p>
         `;
         box.hidden = false;
     }
@@ -270,7 +301,7 @@
                     date_b: dateB,
                     irr_amount: String(amount),
                 });
-                renderRevalueResult(payload);
+                renderRevalueResult(payload, amount);
             } catch (err) {
                 showError(err.message || t('error_generic'));
             }

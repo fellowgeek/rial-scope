@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Idempotent CSV import CLI script.
  *
- * Parses docs/historic.csv (annual resolution) and docs/Dollar_Rial_Price_Dataset.csv
+ * Parses docs/historic.csv (annual resolution) and docs/current.csv
  * (daily resolution) and upserts rows into the SQLite `rates` table using
  * INSERT OR REPLACE, so repeated runs never create duplicates.
  *
@@ -123,9 +123,9 @@ $totalImported += $imported;
 $totalSkipped += $skipped;
 echo "historic.csv: imported {$imported}, skipped {$skipped}\n";
 
-// 2. Daily dataset: docs/Dollar_Rial_Price_Dataset.csv
+// 2. Daily dataset: docs/current.csv
 [$imported, $skipped] = importCsv(
-    __DIR__ . '/../docs/Dollar_Rial_Price_Dataset.csv',
+    __DIR__ . '/../docs/current.csv',
     static function (array $row): ?array {
         $date = Importer::normalizeDate($row['Gregorian Date'] ?? null);
         $close = Importer::cleanNumeric($row['Close Price'] ?? null);
@@ -138,7 +138,7 @@ echo "historic.csv: imported {$imported}, skipped {$skipped}\n";
             'date' => $date,
             'rate_irr_per_usd' => $close,
             'granularity' => 'daily',
-            'source' => 'Dollar_Rial_Price_Dataset.csv',
+            'source' => 'current.csv',
             'open_price' => Importer::cleanNumeric($row['Open Price'] ?? null),
             'low_price' => Importer::cleanNumeric($row['Low Price'] ?? null),
             'high_price' => Importer::cleanNumeric($row['High Price'] ?? null),
@@ -152,7 +152,7 @@ echo "historic.csv: imported {$imported}, skipped {$skipped}\n";
 );
 $totalImported += $imported;
 $totalSkipped += $skipped;
-echo "Dollar_Rial_Price_Dataset.csv: imported {$imported}, skipped {$skipped}\n";
+echo "current.csv: imported {$imported}, skipped {$skipped}\n";
 
 $total = (int) $pdo->query('SELECT COUNT(*) AS c FROM rates')->fetch()['c'];
 
