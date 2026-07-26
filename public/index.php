@@ -30,16 +30,16 @@
         <form id="revalue-form" class="calc-form" novalidate>
             <div class="field">
                 <label for="revalue-amount" data-i18n="label_amount">Amount (IRR)</label>
-                <input type="number" id="revalue-amount" name="amount" min="0" step="any" inputmode="decimal" required>
+                <input type="text" id="revalue-amount" class="amount-input" name="amount" inputmode="decimal" placeholder="0" autocomplete="off" required>
             </div>
             <div class="date-row">
                 <div class="field">
                     <label for="revalue-date-a" data-i18n="label_date_a">Date A</label>
-                    <input type="text" id="revalue-date-a" class="date-input" name="date_a" autocomplete="off" required>
+                    <input type="text" id="revalue-date-a" class="date-input" name="date_a" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off" required>
                 </div>
                 <div class="field">
                     <label for="revalue-date-b" data-i18n="label_date_b">Date B</label>
-                    <input type="text" id="revalue-date-b" class="date-input" name="date_b" autocomplete="off" required>
+                    <input type="text" id="revalue-date-b" class="date-input" name="date_b" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off" required>
                 </div>
             </div>
             <button type="submit" class="btn-primary" data-i18n="btn_calculate">Calculate</button>
@@ -56,22 +56,22 @@
                     <legend data-i18n="legend_item_a">Item A</legend>
                     <div class="field">
                         <label for="compare-price-a" data-i18n="label_price">Price (IRR)</label>
-                        <input type="number" id="compare-price-a" min="0" step="any" inputmode="decimal" required>
+                        <input type="text" id="compare-price-a" class="amount-input" inputmode="decimal" placeholder="0" autocomplete="off" required>
                     </div>
                     <div class="field">
                         <label for="compare-date-a" data-i18n="label_date">Date</label>
-                        <input type="text" id="compare-date-a" class="date-input" autocomplete="off" required>
+                        <input type="text" id="compare-date-a" class="date-input" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off" required>
                     </div>
                 </fieldset>
                 <fieldset class="price-group">
                     <legend data-i18n="legend_item_b">Item B</legend>
                     <div class="field">
                         <label for="compare-price-b" data-i18n="label_price">Price (IRR)</label>
-                        <input type="number" id="compare-price-b" min="0" step="any" inputmode="decimal" required>
+                        <input type="text" id="compare-price-b" class="amount-input" inputmode="decimal" placeholder="0" autocomplete="off" required>
                     </div>
                     <div class="field">
                         <label for="compare-date-b" data-i18n="label_date">Date</label>
-                        <input type="text" id="compare-date-b" class="date-input" autocomplete="off" required>
+                        <input type="text" id="compare-date-b" class="date-input" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off" required>
                     </div>
                 </fieldset>
             </div>
@@ -86,11 +86,11 @@
         <div class="history-controls">
             <div class="field">
                 <label for="history-from" data-i18n="label_from">From</label>
-                <input type="text" id="history-from" class="date-input" autocomplete="off">
+                <input type="text" id="history-from" class="date-input" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off">
             </div>
             <div class="field">
                 <label for="history-to" data-i18n="label_to">To</label>
-                <input type="text" id="history-to" class="date-input" autocomplete="off">
+                <input type="text" id="history-to" class="date-input" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off">
             </div>
             <button id="history-reload" type="button" class="btn-secondary" data-i18n="btn_reload">Reload</button>
         </div>

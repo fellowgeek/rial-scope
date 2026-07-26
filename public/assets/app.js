@@ -141,10 +141,81 @@
     }
 
     // ---------------------------------------------------------------------
+    // Input masks
+    // ---------------------------------------------------------------------
+    function countDigits(str) {
+        return (str.match(/\d/g) || []).length;
+    }
+
+    // Repositions the caret after a mask reformats the value, keeping it after
+    // the same number of digits the user had typed past rather than jumping
+    // to the end of the field.
+    function restoreCaretByDigitCount(input, digitsBeforeCaret) {
+        let pos = 0;
+        let seen = 0;
+        while (pos < input.value.length && seen < digitsBeforeCaret) {
+            if (/\d/.test(input.value[pos])) seen++;
+            pos++;
+        }
+        input.setSelectionRange(pos, pos);
+    }
+
+    function formatAmountValue(raw) {
+        let cleaned = raw.replace(/[^\d.]/g, '');
+        const firstDot = cleaned.indexOf('.');
+        if (firstDot !== -1) {
+            cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, '');
+        }
+        const [intPartRaw, decPart] = cleaned.split('.');
+        const intPart = intPartRaw.replace(/^0+(?=\d)/, '');
+        const grouped = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (decPart === undefined) {
+            return cleaned.endsWith('.') ? `${grouped}.` : grouped;
+        }
+        return `${grouped}.${decPart}`;
+    }
+
+    // Formats an amount input with thousands separators (comma every 3 digits)
+    // as the user types, while preserving caret position.
+    function attachAmountMask(input) {
+        input.addEventListener('input', () => {
+            const cursorPos = input.selectionStart ?? input.value.length;
+            const digitsBeforeCursor = countDigits(input.value.slice(0, cursorPos));
+            input.value = formatAmountValue(input.value);
+            restoreCaretByDigitCount(input, digitsBeforeCursor);
+        });
+    }
+
+    // Strips thousands separators and parses an amount input's value as a number.
+    function parseAmountValue(input) {
+        return parseFloat(input.value.replace(/,/g, ''));
+    }
+
+    function formatDateValue(raw) {
+        const digits = raw.replace(/\D/g, '').slice(0, 8);
+        let out = digits.slice(0, 4);
+        if (digits.length > 4) out += `-${digits.slice(4, 6)}`;
+        if (digits.length > 6) out += `-${digits.slice(6, 8)}`;
+        return out;
+    }
+
+    // Auto-inserts dashes into a date input as the user types digits, producing
+    // a YYYY-MM-DD mask while preserving caret position.
+    function attachDateMask(input) {
+        input.addEventListener('input', () => {
+            const cursorPos = input.selectionStart ?? input.value.length;
+            const digitsBeforeCursor = countDigits(input.value.slice(0, cursorPos));
+            input.value = formatDateValue(input.value);
+            restoreCaretByDigitCount(input, digitsBeforeCursor);
+        });
+    }
+
+    // ---------------------------------------------------------------------
     // Date pickers
     // ---------------------------------------------------------------------
     function initDatePickers() {
         document.querySelectorAll('.date-input').forEach((input) => {
+            attachDateMask(input);
             const fp = window.flatpickr(input, {
                 dateFormat: 'Y-m-d',
                 minDate: state.minDate,
@@ -152,6 +223,12 @@
                 allowInput: true,
             });
             state.pickers.push(fp);
+        });
+    }
+
+    function initAmountMasks() {
+        document.querySelectorAll('.amount-input').forEach((input) => {
+            attachAmountMask(input);
         });
     }
 
@@ -281,7 +358,7 @@
         form.addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const amount = parseFloat(document.getElementById('revalue-amount').value);
+            const amount = parseAmountValue(document.getElementById('revalue-amount'));
             const dateA = document.getElementById('revalue-date-a').value;
             const dateB = document.getElementById('revalue-date-b').value;
 
@@ -313,8 +390,8 @@
         form.addEventListener('submit', async (evt) => {
             evt.preventDefault();
 
-            const priceA = parseFloat(document.getElementById('compare-price-a').value);
-            const priceB = parseFloat(document.getElementById('compare-price-b').value);
+            const priceA = parseAmountValue(document.getElementById('compare-price-a'));
+            const priceB = parseAmountValue(document.getElementById('compare-price-b'));
             const dateA = document.getElementById('compare-date-a').value;
             const dateB = document.getElementById('compare-date-b').value;
 
@@ -467,6 +544,7 @@
 
         initTabs();
         initDatePickers();
+        initAmountMasks();
         initRevalueForm();
         initCompareForm();
         initHistoryControls();
