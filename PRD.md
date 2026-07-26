@@ -10,10 +10,10 @@ The **USD-IRR Exchange Explorer** is a responsive, local-first web application d
 
 * **Backend:** PHP 8.x (built-in web server support) + SQLite 3 (zero external composer packages).
 * **Testing:** Custom, lightweight PHP test runner in `tests/run_tests.php` evaluating unit, integration, and CLI workflow assertions.
-* **Frontend:** HTML5, CSS3 (responsive, bilingual LTR/RTL support), Vanilla JavaScript or light third-party utilities.
+* **Frontend:** HTML5, CSS3 (responsive, English-only, LTR), Vanilla JavaScript or light third-party utilities.
 * **Third-Party Libraries (Allowed):**
 * **Charting:** Modern JS chart libraries (e.g., Chart.js, Lightweight Charts, ApexCharts) are permitted to handle line rendering, tooltips, and non-continuous temporal gaps gracefully.
-* **Calendars / Date Pickers:** JS pickers with native Jalali/Persian calendar support (e.g., `persian-datepicker`, `flatpickr`) are permitted alongside standard native HTML date inputs.
+* **Calendars / Date Pickers:** JS date pickers (e.g., `flatpickr`) are permitted alongside standard native HTML date inputs.
 
 
 * **Database:** Local, file-based SQLite stored at `data/rates.db` (git-ignored).
@@ -37,7 +37,7 @@ usd-irr/
 │   ├── assets/
 │   │   ├── app.js               # Application state, calculations, API & chart integration
 │   │   ├── vendor/              # Third-party JS/CSS (Chart library, Calendar library)
-│   │   └── styles.css           # Responsive layout, LTR/RTL bilingual styling
+│   │   └── styles.css           # Responsive layout styling, incl. today's-rate widget & result cards
 │   └── index.php                # Main application entry point & accessible HTML shell
 ├── src/
 │   ├── Calculator.php           # Centralized pure conversion & purchasing-power logic
@@ -102,13 +102,13 @@ Enforce unified conversion logic:
 
 * **Guards:** Sanitize zero or negative inputs, prevent division-by-zero on baseline changes.
 
-### 5. Responsive Bilingual UI Framework
+### 5. Responsive Single-Language UI Framework
 
-Construct a clean, single-page UI in `public/index.php`.
+Construct a clean, single-page, English-only (LTR) UI in `public/index.php`.
 
-* **Bilingual Switch:** Live English (LTR) / Persian (RTL) toggle updating text labels and document alignment.
+* **Persistent Live Rate:** The current USD→IRR rate (from the `latest` API observation) is always visible in the page header, independent of which tab is active, showing the applied rate and its "as of" date.
 * **Date & Rate Display:** Show clear, explicit badges whenever a requested date is mapped to a nearby trading observation (e.g., *"Requested: 2023-03-21 → Applied: 2023-03-20"*).
-* **Formatters:** Use browser `Intl` APIs for number formatting (e.g., `fa-IR` and `en-US` locale formats). Persidate or Flatpickr can be integrated for seamless Jalali calendar input handling.
+* **Formatters:** Use browser `Intl` (`en-US` locale) APIs for number formatting. Flatpickr provides standard Gregorian calendar input handling.
 
 ### 6. Comparison Workflows
 
@@ -116,6 +116,8 @@ Implement two dedicated workflow views/tabs:
 
 1. **Revalue One Amount:** Evaluates how a fixed Rial amount (e.g., 100,000,000 IRR) changed in USD purchasing power between two selected dates.
 2. **Compare Item Prices:** Takes two distinct historical item prices (e.g., a car costing 50,000,000 IRR in 2012 vs 2,000,000,000 IRR in 2024) and calculates whether the item got cheaper or more expensive in USD terms.
+
+Both workflows render their results as a row of three responsive cards (Date/Item A, Date/Item B, and a highlighted Delta card showing the dollar and percent change with a color-coded up/down indicator) rather than a plain data table.
 
 ### 7. Interactive History Explorer & Charting
 
@@ -192,5 +194,6 @@ Since external packages like PHPUnit are excluded to maintain zero external comp
 2. **Backend Test Suite:** Executing `php tests/run_tests.php` returns a zero exit code (`0`) and passes all Unit, Repository, Importer, and API integration assertions.
 3. **API Verification:** `public/api/rates.php?action=lookup&date=2024-03-22` correctly falls back to the nearest active trading date and returns metadata explaining the resolution.
 4. **UI/UX Verification:**
-* Switching between English and Persian instantly flips layout direction (`dir="ltr"` / `dir="rtl"`).
+* The current USD→IRR rate is visible in the header at all times, on every tab, and updates from the `latest` API observation on page load.
+* Revalue and Compare results render as a set of visually distinct cards (not a table), with the delta card color-coded for gains/losses.
 * Third-party chart renders cleanly on desktop and mobile viewports with an explicit visual break during the 2010–2011 data gap.
