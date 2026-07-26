@@ -9,11 +9,16 @@
 </head>
 <body>
 <header class="app-header">
-    <h1 data-i18n="app_title">USD-IRR Exchange Explorer</h1>
     <div id="today-rate" class="today-rate" aria-live="polite">
         <span class="today-rate-label" data-i18n="today_rate_label">Today's Rate</span>
         <span class="today-rate-value" id="today-rate-value">&hellip;</span>
         <span class="today-rate-date" id="today-rate-date"></span>
+    </div>
+    <h1 data-i18n="app_title">USD-IRR Exchange Explorer</h1>
+    <div class="lang-switcher" role="group" aria-label="Language">
+        <button type="button" class="lang-option" id="lang-en" data-lang="en">EN</button>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <button type="button" class="lang-option" id="lang-fa" data-lang="fa">FA</button>
     </div>
 </header>
 

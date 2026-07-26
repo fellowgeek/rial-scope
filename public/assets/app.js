@@ -12,49 +12,114 @@
     // ---------------------------------------------------------------------
     // i18n
     // ---------------------------------------------------------------------
-    const STRINGS = {
-        app_title: 'USD-IRR Exchange Explorer',
-        today_rate_label: "Today's Rate",
-        tab_revalue: 'Revalue Amount',
-        tab_compare: 'Compare Item Prices',
-        tab_history: 'History Explorer',
-        revalue_intro: "See how a fixed Rial amount's purchasing power in US Dollars changed between two dates.",
-        compare_intro: 'Compare two historical Rial prices for an item (e.g. a car) to see whether it got cheaper or more expensive in real US Dollar terms.',
-        history_intro: 'Explore the full USD/IRR rate history from 1950 to today.',
-        label_amount: 'Amount (IRR)',
-        label_date_a: 'Date A',
-        label_date_b: 'Date B',
-        label_price: 'Price (IRR)',
-        label_date: 'Date',
-        label_from: 'From',
-        label_to: 'To',
-        legend_item_a: 'Item A',
-        legend_item_b: 'Item B',
-        btn_calculate: 'Calculate',
-        btn_reload: 'Reload',
-        gap_note: 'Note: no data is available between 2010-01-01 and 2011-11-26; the chart shows an explicit break rather than an interpolated line.',
-        footer_note: 'Data spans 1950–2026. When a selected date has no trading data (weekend/holiday), the nearest prior available date is applied automatically.',
-        result_usd_at_a: 'USD value at Date A',
-        result_usd_at_b: 'USD value at Date B',
-        result_usd_a: 'Item A in USD',
-        result_usd_b: 'Item B in USD',
-        result_delta_usd: 'Dollar delta',
-        result_delta_pct: 'Percent delta',
-        fallback_badge: 'Requested {requested} → Applied {applied}',
-        error_generic: 'Something went wrong. Please check your inputs and try again.',
-        error_invalid_amount: 'Please enter a valid positive amount.',
-        error_invalid_dates: 'Please select valid dates.',
+    const LANG_STORAGE_KEY = 'usd-irr-lang';
+
+    const I18N = {
+        en: {
+            app_title: 'USD-IRR Exchange Explorer',
+            today_rate_label: "Today's Rate",
+            today_rate_as_of: 'as of {date}',
+            tab_revalue: 'Revalue Amount',
+            tab_compare: 'Compare Item Prices',
+            tab_history: 'History Explorer',
+            revalue_intro: "See how a fixed Rial amount's purchasing power in US Dollars changed between two dates.",
+            compare_intro: 'Compare two historical Rial prices for an item (e.g. a car) to see whether it got cheaper or more expensive in real US Dollar terms.',
+            history_intro: 'Explore the full USD/IRR rate history from 1950 to today.',
+            label_amount: 'Amount (IRR)',
+            label_date_a: 'Date A',
+            label_date_b: 'Date B',
+            label_price: 'Price (IRR)',
+            label_date: 'Date',
+            label_from: 'From',
+            label_to: 'To',
+            legend_item_a: 'Item A',
+            legend_item_b: 'Item B',
+            btn_calculate: 'Calculate',
+            btn_reload: 'Reload',
+            gap_note: 'Note: no data is available between 2010-01-01 and 2011-11-26; the chart shows an explicit break rather than an interpolated line.',
+            footer_note: 'Data spans 1950–2026. When a selected date has no trading data (weekend/holiday), the nearest prior available date is applied automatically.',
+            result_usd_at_a: 'USD value at Date A',
+            result_usd_at_b: 'USD value at Date B',
+            result_usd_a: 'Item A in USD',
+            result_usd_b: 'Item B in USD',
+            result_delta_usd: 'Dollar delta',
+            result_delta_pct: 'Percent delta',
+            fallback_badge: 'Requested {requested} → Applied {applied}',
+            error_generic: 'Something went wrong. Please check your inputs and try again.',
+            error_invalid_amount: 'Please enter a valid positive amount.',
+            error_invalid_dates: 'Please select valid dates.',
+            summary_revalue_gain: '{amount} IRR bought ${usdA} on {dateA} but bought ${usdB} on {dateB} — a gain of {magnitude} in USD terms, meaning the Rial strengthened against the US Dollar over this period.',
+            summary_revalue_loss: '{amount} IRR bought ${usdA} on {dateA} but only buys ${usdB} on {dateB} — a loss of {magnitude} in USD terms, meaning the Rial weakened against the US Dollar over this period.',
+            summary_revalue_same: '{amount} IRR was worth ${usdA} on both {dateA} and {dateB} — its USD purchasing power did not change over this period.',
+            summary_compare_more: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} more expensive in real US Dollar terms.',
+            summary_compare_less: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} cheaper in real US Dollar terms.',
+            summary_compare_same: 'Both items cost the same, ${usdA}, in real US Dollar terms despite the different Rial prices and dates.',
+        },
+        fa: {
+            app_title: 'کاوشگر نرخ ارز دلار به ریال',
+            today_rate_label: 'نرخ امروز',
+            today_rate_as_of: 'در تاریخ {date}',
+            tab_revalue: 'ارزش‌گذاری مبلغ',
+            tab_compare: 'مقایسه قیمت اقلام',
+            tab_history: 'کاوش تاریخچه',
+            revalue_intro: 'ببینید قدرت خرید یک مبلغ ثابت ریالی بر حسب دلار آمریکا بین دو تاریخ چگونه تغییر کرده است.',
+            compare_intro: 'دو قیمت تاریخی ریالی یک کالا (مثلاً خودرو) را مقایسه کنید تا ببینید بر حسب دلار واقعی ارزان‌تر شده یا گران‌تر.',
+            history_intro: 'تاریخچه کامل نرخ دلار به ریال از سال ۱۹۵۰ تا امروز را کاوش کنید.',
+            label_amount: 'مبلغ (ریال)',
+            label_date_a: 'تاریخ الف',
+            label_date_b: 'تاریخ ب',
+            label_price: 'قیمت (ریال)',
+            label_date: 'تاریخ',
+            label_from: 'از',
+            label_to: 'تا',
+            legend_item_a: 'کالای الف',
+            legend_item_b: 'کالای ب',
+            btn_calculate: 'محاسبه',
+            btn_reload: 'بارگذاری مجدد',
+            gap_note: 'توجه: هیچ داده‌ای بین تاریخ‌های ۲۰۱۰-۰۱-۰۱ و ۲۰۱۱-۱۱-۲۶ موجود نیست؛ نمودار به‌جای درون‌یابی، یک شکاف آشکار نمایش می‌دهد.',
+            footer_note: 'داده‌ها از سال ۱۹۵۰ تا ۲۰۲۶ را در بر می‌گیرد. هنگامی که تاریخ انتخابی داده معاملاتی نداشته باشد (تعطیلات/آخر هفته)، نزدیک‌ترین تاریخ قبلی موجود به‌طور خودکار اعمال می‌شود.',
+            result_usd_at_a: 'ارزش دلاری در تاریخ الف',
+            result_usd_at_b: 'ارزش دلاری در تاریخ ب',
+            result_usd_a: 'کالای الف به دلار',
+            result_usd_b: 'کالای ب به دلار',
+            result_delta_usd: 'اختلاف دلاری',
+            result_delta_pct: 'اختلاف درصدی',
+            fallback_badge: 'درخواستی {requested} ← اعمال‌شده {applied}',
+            error_generic: 'مشکلی پیش آمد. لطفاً ورودی‌ها را بررسی کرده و دوباره تلاش کنید.',
+            error_invalid_amount: 'لطفاً یک مبلغ مثبت معتبر وارد کنید.',
+            error_invalid_dates: 'لطفاً تاریخ‌های معتبر انتخاب کنید.',
+            summary_revalue_gain: '{amount} ریال در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} معادل {usdB}$ شد — سودی معادل {magnitude} از نظر ارزش دلاری، یعنی ریال در این بازه در برابر دلار آمریکا تقویت شده است.',
+            summary_revalue_loss: '{amount} ریال در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} تنها معادل {usdB}$ می‌شود — زیانی معادل {magnitude} از نظر ارزش دلاری، یعنی ریال در این بازه در برابر دلار آمریکا تضعیف شده است.',
+            summary_revalue_same: '{amount} ریال هم در تاریخ {dateA} و هم در تاریخ {dateB} معادل {usdA}$ بود — قدرت خرید دلاری آن در این بازه تغییری نکرده است.',
+            summary_compare_more: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} گران‌تر است.',
+            summary_compare_less: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} ارزان‌تر است.',
+            summary_compare_same: 'هر دو کالا از نظر ارزش واقعی دلاری برابر بودند، {usdA}$، با وجود قیمت‌ها و تاریخ‌های ریالی متفاوت.',
+        },
     };
+
+    function loadStoredLang() {
+        try {
+            const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
+            return stored === 'fa' ? 'fa' : 'en';
+        } catch (err) {
+            return 'en';
+        }
+    }
 
     const state = {
         maxDate: null,
         minDate: '1950-01-01',
         pickers: [],
         chart: null,
+        lang: loadStoredLang(),
+        latestRate: null,
+        lastRevalue: null,
+        lastCompare: null,
     };
 
     function t(key) {
-        return STRINGS[key] || key;
+        const dict = I18N[state.lang] || I18N.en;
+        return dict[key] || I18N.en[key] || key;
     }
 
     function format(template, params) {
@@ -104,6 +169,43 @@
         document.querySelectorAll('[data-i18n]').forEach((el) => {
             el.textContent = t(el.dataset.i18n);
         });
+
+        const html = document.getElementById('html-root');
+        if (html) {
+            html.lang = state.lang;
+            html.dir = state.lang === 'fa' ? 'rtl' : 'ltr';
+        }
+
+        document.querySelectorAll('.lang-option').forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.lang === state.lang);
+        });
+    }
+
+    function setLanguage(lang) {
+        const next = lang === 'fa' ? 'fa' : 'en';
+        if (next === state.lang) return;
+        state.lang = next;
+        try {
+            window.localStorage.setItem(LANG_STORAGE_KEY, state.lang);
+        } catch (err) {
+            // localStorage unavailable (e.g. privacy mode) — language just won't persist.
+        }
+
+        applyTranslations();
+        renderTodayRate(state.latestRate);
+
+        if (state.lastRevalue) {
+            renderRevalueResult(state.lastRevalue.payload, state.lastRevalue.amount);
+        }
+        if (state.lastCompare) {
+            renderCompareResult(state.lastCompare.payload);
+        }
+    }
+
+    function initLanguageToggle() {
+        document.querySelectorAll('.lang-option').forEach((btn) => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
     }
 
     function renderTodayRate(latest) {
@@ -111,8 +213,9 @@
         const dateEl = document.getElementById('today-rate-date');
         if (!valueEl || !dateEl || !latest) return;
 
+        state.latestRate = latest;
         valueEl.textContent = `${formatNumber(latest.rate_irr_per_usd)} IRR`;
-        dateEl.textContent = `as of ${latest.date}`;
+        dateEl.textContent = format(t('today_rate_as_of'), { date: latest.date });
     }
 
     // ---------------------------------------------------------------------
@@ -260,28 +363,40 @@
     }
 
     function buildRevalueSummary(amount, dateA, dateB, revalue) {
-        const amountText = formatNumber(amount, 0);
-        const magnitude = `$${formatNumber(Math.abs(revalue.delta_usd))}${pctPhrase(revalue.delta_percent)}`;
+        const params = {
+            amount: formatNumber(amount, 0),
+            usdA: formatNumber(revalue.usd_at_a),
+            usdB: formatNumber(revalue.usd_at_b),
+            dateA: formatDateForDisplay(dateA.applied_date),
+            dateB: formatDateForDisplay(dateB.applied_date),
+            magnitude: `$${formatNumber(Math.abs(revalue.delta_usd))}${pctPhrase(revalue.delta_percent)}`,
+        };
 
         if (revalue.delta_usd > 0) {
-            return `${amountText} IRR bought $${formatNumber(revalue.usd_at_a)} on ${formatDateForDisplay(dateA.applied_date)} but bought $${formatNumber(revalue.usd_at_b)} on ${formatDateForDisplay(dateB.applied_date)} — a gain of ${magnitude} in USD terms, meaning the Rial strengthened against the US Dollar over this period.`;
+            return format(t('summary_revalue_gain'), params);
         }
         if (revalue.delta_usd < 0) {
-            return `${amountText} IRR bought $${formatNumber(revalue.usd_at_a)} on ${formatDateForDisplay(dateA.applied_date)} but only buys $${formatNumber(revalue.usd_at_b)} on ${formatDateForDisplay(dateB.applied_date)} — a loss of ${magnitude} in USD terms, meaning the Rial weakened against the US Dollar over this period.`;
+            return format(t('summary_revalue_loss'), params);
         }
-        return `${amountText} IRR was worth $${formatNumber(revalue.usd_at_a)} on both ${formatDateForDisplay(dateA.applied_date)} and ${formatDateForDisplay(dateB.applied_date)} — its USD purchasing power did not change over this period.`;
+        return format(t('summary_revalue_same'), params);
     }
 
     function buildCompareSummary(dateA, dateB, compareItems) {
-        const magnitude = `$${formatNumber(Math.abs(compareItems.delta_usd))}${pctPhrase(compareItems.delta_percent)}`;
+        const params = {
+            usdA: formatNumber(compareItems.usd_a),
+            usdB: formatNumber(compareItems.usd_b),
+            dateA: formatDateForDisplay(dateA.applied_date),
+            dateB: formatDateForDisplay(dateB.applied_date),
+            magnitude: `$${formatNumber(Math.abs(compareItems.delta_usd))}${pctPhrase(compareItems.delta_percent)}`,
+        };
 
         if (compareItems.delta_usd > 0) {
-            return `Item A cost $${formatNumber(compareItems.usd_a)} on ${formatDateForDisplay(dateA.applied_date)}, while Item B cost $${formatNumber(compareItems.usd_b)} on ${formatDateForDisplay(dateB.applied_date)} — Item B is ${magnitude} more expensive in real US Dollar terms.`;
+            return format(t('summary_compare_more'), params);
         }
         if (compareItems.delta_usd < 0) {
-            return `Item A cost $${formatNumber(compareItems.usd_a)} on ${formatDateForDisplay(dateA.applied_date)}, while Item B cost $${formatNumber(compareItems.usd_b)} on ${formatDateForDisplay(dateB.applied_date)} — Item B is ${magnitude} cheaper in real US Dollar terms.`;
+            return format(t('summary_compare_less'), params);
         }
-        return `Both items cost the same, $${formatNumber(compareItems.usd_a)}, in real US Dollar terms despite the different Rial prices and dates.`;
+        return format(t('summary_compare_same'), params);
     }
 
     function renderRevalueResult(payload, amount) {
@@ -315,6 +430,7 @@
             <p class="result-summary">${buildRevalueSummary(amount, date_a, date_b, revalue)}</p>
         `;
         box.hidden = false;
+        state.lastRevalue = { payload, amount };
     }
 
     function renderCompareResult(payload) {
@@ -348,6 +464,7 @@
             <p class="result-summary">${buildCompareSummary(date_a, date_b, compare_items)}</p>
         `;
         box.hidden = false;
+        state.lastCompare = { payload };
     }
 
     // ---------------------------------------------------------------------
@@ -534,6 +651,9 @@
     // Bootstrap
     // ---------------------------------------------------------------------
     async function init() {
+        applyTranslations();
+        initLanguageToggle();
+
         try {
             const latest = await apiGet({ action: 'latest' });
             state.maxDate = latest.date;
