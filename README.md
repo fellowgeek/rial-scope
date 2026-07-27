@@ -1,4 +1,4 @@
-# USD-IRR Exchange Explorer
+# Rial Scope
 
 A local-first web application for exploring, converting, and evaluating
 purchasing-power changes between the US Dollar (USD) and Iranian Rial (IRR)

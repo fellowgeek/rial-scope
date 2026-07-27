@@ -1,8 +1,8 @@
-# Product Requirement Document (PRD): USD-IRR Exchange Explorer
+# Product Requirement Document (PRD): Rial Scope
 
 ## Overview
 
-The **USD-IRR Exchange Explorer** is a responsive, local-first web application designed to explore, convert, and evaluate purchasing-power changes between the US Dollar (USD) and Iranian Rial (IRR) using historical daily and annual market datasets spanning 1950 through mid-2026.
+The **Rial Scope** is a responsive, local-first web application designed to explore, convert, and evaluate purchasing-power changes between the US Dollar (USD) and Iranian Rial (IRR) using historical daily and annual market datasets spanning 1950 through mid-2026.
 
 ---
 

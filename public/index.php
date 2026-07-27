@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="app_title">USD-IRR Exchange Explorer</title>
+<title data-i18n="app_title">Rial Scope</title>
 <link rel="stylesheet" href="assets/vendor/flatpickr.min.css">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
@@ -14,7 +14,7 @@
         <span class="today-rate-value" id="today-rate-value">&hellip;</span>
         <span class="today-rate-date" id="today-rate-date"></span>
     </div>
-    <h1 data-i18n="app_title">USD-IRR Exchange Explorer</h1>
+    <h1 data-i18n="app_title">Rial Scope</h1>
     <div class="lang-switcher" role="group" aria-label="Language">
         <button type="button" class="lang-option" id="lang-en" data-lang="en">EN</button>
         <span class="lang-sep" aria-hidden="true">/</span>

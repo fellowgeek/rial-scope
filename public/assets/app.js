@@ -1,5 +1,5 @@
 /**
- * USD-IRR Exchange Explorer — application state, calculations, API & chart integration.
+ * Rial Scope — application state, calculations, API & chart integration.
  */
 (function () {
     'use strict';
@@ -16,7 +16,7 @@
 
     const I18N = {
         en: {
-            app_title: 'USD-IRR Exchange Explorer',
+            app_title: 'Rial Scope',
             today_rate_label: "Today's Rate",
             today_rate_as_of: 'as of {date}',
             tab_revalue: 'Revalue Amount',
