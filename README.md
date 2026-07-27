@@ -3,7 +3,9 @@
 A local-first web application for exploring, converting, and evaluating
 purchasing-power changes between the US Dollar (USD) and Iranian Rial (IRR)
 using historical daily (2011–2026) and annual (1950–2010) exchange rate
-datasets.
+datasets. The UI is bilingual (English/Farsi) with full RTL support and
+follows the "Precision Finance" design system documented in
+[`docs/design/DESIGN.md`](docs/design/DESIGN.md).
 
 ## Requirements
 
@@ -19,8 +21,9 @@ datasets.
    ```
 
    This is idempotent — re-running it upserts rows without creating
-   duplicates. A successful run reports 3,969 total rows (61 annual + 3,908
-   daily).
+   duplicates. A successful run reports 61 annual rows plus one daily row
+   per trading day in `docs/current.csv` (currently 3,974 total rows and
+   growing as new daily rates are appended over time).
 
 2. (Optional) Refresh `docs/current.csv` with the latest daily rates and
    re-import it in one step:
@@ -32,7 +35,10 @@ datasets.
    This downloads the latest CSV from the
    [kooroshkz/Dollar-Rial-Toman-Live-Price-Dataset](https://github.com/kooroshkz/Dollar-Rial-Toman-Live-Price-Dataset)
    repository, overwrites `docs/current.csv`, and re-runs the same import
-   logic as `bin/import_rates.php`.
+   logic as `bin/import_rates.php`. If the download fails, or if the
+   downloaded file doesn't yet include a row for today's date, it falls
+   back to scraping the current rate from tgju.org and upserts a row for
+   today directly.
 
 3. Start the built-in PHP web server from the project root:
 
@@ -71,3 +77,12 @@ All endpoints are served from `public/api/rates.php?action=...`:
   explicit visual break there instead of a fake interpolated line.
 * Third-party assets (Chart.js, flatpickr) are vendored locally under
   `public/assets/vendor/` for offline/local-first use.
+* The UI supports English and Farsi, switchable at any time via the
+  language control in the header (persisted in `localStorage`). Farsi mode
+  switches the page to `dir="rtl"`; numbers are kept in Latin/`en-US`
+  formatting in both languages by design.
+* Frontend styling follows the "Precision Finance" design system (warm
+  terracotta/amber palette, Manrope/Work Sans/JetBrains Mono typography)
+  documented in `docs/design/DESIGN.md`. Fonts are referenced by family
+  name with system fallbacks only — no external font/CDN requests are made,
+  keeping the app fully local-first/offline-capable.
