@@ -316,13 +316,19 @@
     // ---------------------------------------------------------------------
     // Date pickers
     // ---------------------------------------------------------------------
+    // History explorer's From/To fields intentionally default to empty so the
+    // initial chart shows the full 1950-today range rather than a single day.
+    const HISTORY_RANGE_INPUT_IDS = new Set(['history-from', 'history-to']);
+
     function initDatePickers() {
         document.querySelectorAll('.date-input').forEach((input) => {
             attachDateMask(input);
+            const isHistoryRangeInput = HISTORY_RANGE_INPUT_IDS.has(input.id);
             const fp = window.flatpickr(input, {
                 dateFormat: 'Y-m-d',
                 minDate: state.minDate,
                 maxDate: state.maxDate || undefined,
+                defaultDate: isHistoryRangeInput ? undefined : (state.maxDate || undefined),
                 allowInput: true,
             });
             state.pickers.push(fp);
