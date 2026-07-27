@@ -22,8 +22,11 @@
             tab_revalue: 'Revalue Amount',
             tab_compare: 'Compare Item Prices',
             tab_history: 'History Explorer',
+            revalue_heading: 'Purchasing Power Analysis',
             revalue_intro: "See how a fixed Rial amount's purchasing power in US Dollars changed between two dates.",
+            compare_heading: 'Item Price Comparison',
             compare_intro: 'Compare two historical Rial prices for an item (e.g. a car) to see whether it got cheaper or more expensive in real US Dollar terms.',
+            history_heading: 'Historical Rate Explorer',
             history_intro: 'Explore the full USD/IRR rate history from 1950 to today.',
             label_amount: 'Amount (IRR)',
             label_date_a: 'Date A',
@@ -44,6 +47,8 @@
             result_usd_b: 'Item B in USD',
             result_delta_usd: 'Dollar delta',
             result_delta_pct: 'Percent delta',
+            chip_gain: 'Gain',
+            chip_loss: 'Loss',
             fallback_badge: 'Requested {requested} → Applied {applied}',
             error_generic: 'Something went wrong. Please check your inputs and try again.',
             error_invalid_amount: 'Please enter a valid positive amount.',
@@ -62,8 +67,11 @@
             tab_revalue: 'ارزش‌گذاری مبلغ',
             tab_compare: 'مقایسه قیمت اقلام',
             tab_history: 'کاوش تاریخچه',
+            revalue_heading: 'تحلیل قدرت خرید',
             revalue_intro: 'ببینید قدرت خرید یک مبلغ ثابت ریالی بر حسب دلار آمریکا بین دو تاریخ چگونه تغییر کرده است.',
+            compare_heading: 'مقایسه قیمت اقلام',
             compare_intro: 'دو قیمت تاریخی ریالی یک کالا (مثلاً خودرو) را مقایسه کنید تا ببینید بر حسب دلار واقعی ارزان‌تر شده یا گران‌تر.',
+            history_heading: 'کاوش نرخ تاریخی',
             history_intro: 'تاریخچه کامل نرخ دلار به ریال از سال ۱۹۵۰ تا امروز را کاوش کنید.',
             label_amount: 'مبلغ (ریال)',
             label_date_a: 'تاریخ الف',
@@ -84,6 +92,8 @@
             result_usd_b: 'کالای ب به دلار',
             result_delta_usd: 'اختلاف دلاری',
             result_delta_pct: 'اختلاف درصدی',
+            chip_gain: 'سود',
+            chip_loss: 'زیان',
             fallback_badge: 'درخواستی {requested} ← اعمال‌شده {applied}',
             error_generic: 'مشکلی پیش آمد. لطفاً ورودی‌ها را بررسی کرده و دوباره تلاش کنید.',
             error_invalid_amount: 'لطفاً یک مبلغ مثبت معتبر وارد کنید.',
@@ -364,6 +374,12 @@
         return '—';
     }
 
+    function deltaChip(value) {
+        if (value > 0) return `<span class="result-chip positive">${t('chip_gain')}</span>`;
+        if (value < 0) return `<span class="result-chip negative">${t('chip_loss')}</span>`;
+        return '';
+    }
+
     function pctPhrase(deltaPercent) {
         return deltaPercent === null ? '' : ` (${formatNumber(Math.abs(deltaPercent))}%)`;
     }
@@ -428,6 +444,7 @@
                     <span class="result-card-caption">${t('result_usd_at_b')}</span>
                 </div>
                 <div class="result-card result-card--delta ${pctClass}">
+                    ${deltaChip(revalue.delta_usd)}
                     <span class="result-card-label">${t('result_delta_usd')}</span>
                     <span class="result-card-value large ${deltaClass(revalue.delta_usd)}">${deltaIcon(revalue.delta_usd)} $${formatNumber(Math.abs(revalue.delta_usd))}</span>
                     <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
@@ -462,6 +479,7 @@
                     <span class="result-card-caption">${t('result_usd_b')}</span>
                 </div>
                 <div class="result-card result-card--delta ${pctClass}">
+                    ${deltaChip(compare_items.delta_usd)}
                     <span class="result-card-label">${t('result_delta_usd')}</span>
                     <span class="result-card-value large ${deltaClass(compare_items.delta_usd)}">${deltaIcon(compare_items.delta_usd)} $${formatNumber(Math.abs(compare_items.delta_usd))}</span>
                     <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
@@ -590,12 +608,13 @@
                     {
                         label: 'IRR per USD',
                         data,
-                        borderColor: '#1f6feb',
-                        backgroundColor: 'rgba(31, 111, 235, 0.1)',
+                        borderColor: '#8c442e',
+                        backgroundColor: 'rgba(140, 68, 46, 0.12)',
                         spanGaps: false,
                         pointRadius: 0,
-                        borderWidth: 1.5,
+                        borderWidth: 1.75,
                         tension: 0.1,
+                        fill: true,
                     },
                 ],
             },
@@ -604,11 +623,14 @@
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        ticks: { maxTicksLimit: 10, autoSkip: true },
+                        ticks: { maxTicksLimit: 10, autoSkip: true, color: '#54433e' },
+                        grid: { color: '#ebe0dd' },
                     },
                     y: {
                         type: 'logarithmic',
-                        title: { display: true, text: 'IRR per USD (log scale)' },
+                        title: { display: true, text: 'IRR per USD (log scale)', color: '#54433e' },
+                        ticks: { color: '#54433e' },
+                        grid: { color: '#ebe0dd' },
                     },
                 },
                 plugins: {
