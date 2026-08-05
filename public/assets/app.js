@@ -41,6 +41,7 @@
             btn_reload: 'Reload',
             gap_note: 'Note: no data is available between 2010-01-01 and 2011-11-26; the chart shows an explicit break rather than an interpolated line.',
             footer_note: 'Data spans 1950–2026. When a selected date has no trading data (weekend/holiday), the nearest prior available date is applied automatically.',
+            footer_github_html: 'The datasets and source code are available on <a href="https://github.com/fellowgeek/rial-scope" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>.',
             result_usd_at_a: 'USD value at Date A',
             result_usd_at_b: 'USD value at Date B',
             result_usd_a: 'Item A in USD',
@@ -65,7 +66,8 @@
             label_amount_usd: 'Amount (USD)',
             result_converted_irr: 'Converted Amount (IRR)',
             result_rate_applied: 'Applied Rate',
-            summary_convert: '${usdAmount} USD on {date} equals {irrAmount} IRR at an exchange rate of {rate} IRR per USD.',
+            summary_convert: '${usdAmount} USD on {date} equals {irrAmount} at an exchange rate of {rate} per USD.',
+            unit_toman: 'Toman',
         },
         fa: {
             app_title: 'کاوشگر نرخ ارز دلار به ریال',
@@ -93,6 +95,7 @@
             btn_reload: 'بارگذاری مجدد',
             gap_note: 'توجه: هیچ داده‌ای بین تاریخ‌های ۲۰۱۰-۰۱-۰۱ و ۲۰۱۱-۱۱-۲۶ موجود نیست؛ نمودار به‌جای درون‌یابی، یک شکاف آشکار نمایش می‌دهد.',
             footer_note: 'داده‌ها از سال ۱۹۵۰ تا ۲۰۲۶ را در بر می‌گیرد. هنگامی که تاریخ انتخابی داده معاملاتی نداشته باشد (تعطیلات/آخر هفته)، نزدیک‌ترین تاریخ قبلی موجود به‌طور خودکار اعمال می‌شود.',
+            footer_github_html: 'داده‌ها و کد منبع پروژه در <a href="https://github.com/fellowgeek/rial-scope" target="_blank" rel="noopener noreferrer" class="footer-link">گیت‌هاب</a> در دسترس است.',
             result_usd_at_a: 'ارزش دلاری در تاریخ الف',
             result_usd_at_b: 'ارزش دلاری در تاریخ ب',
             result_usd_a: 'کالای الف به دلار',
@@ -117,7 +120,8 @@
             label_amount_usd: 'مبلغ (دلار)',
             result_converted_irr: 'مبلغ تبدیل شده (ریال)',
             result_rate_applied: 'نرخ اعمال‌شده',
-            summary_convert: 'در تاریخ {date}، مبلغ ${usdAmount} دلار معادل {irrAmount} ریال با نرخ {rate} ریال به ازای هر دلار است.',
+            summary_convert: 'در تاریخ {date}، مبلغ ${usdAmount} دلار معادل {irrAmount} با نرخ {rate} به ازای هر دلار است.',
+            unit_toman: 'تومان',
         },
     };
 
@@ -162,6 +166,12 @@
         }).format(value);
     }
 
+    function formatToman(irrValue, fractionDigits) {
+        if (!Number.isFinite(irrValue)) return '';
+        const tomanValue = irrValue / 10;
+        return `${formatNumber(tomanValue, fractionDigits ?? 0)} ${t('unit_toman')}`;
+    }
+
     // ---------------------------------------------------------------------
     // API helpers
     // ---------------------------------------------------------------------
@@ -193,6 +203,9 @@
     function applyTranslations() {
         document.querySelectorAll('[data-i18n]').forEach((el) => {
             el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+            el.innerHTML = t(el.dataset.i18nHtml);
         });
 
         const html = document.getElementById('html-root');
@@ -403,8 +416,10 @@
     }
 
     function buildRevalueSummary(amount, dateA, dateB, revalue) {
+        const tomanStr = formatToman(amount, 0);
+        const amountDisplay = `${formatNumber(amount, 0)} IRR (${tomanStr})`;
         const params = {
-            amount: formatNumber(amount, 0),
+            amount: amountDisplay,
             usdA: formatNumber(revalue.usd_at_a),
             usdB: formatNumber(revalue.usd_at_b),
             dateA: formatDateForDisplay(dateA.applied_date),
@@ -579,11 +594,13 @@
     }
 
     function buildConvertSummary(payload) {
+        const tomanRateStr = formatToman(payload.rate_irr_per_usd);
+        const tomanAmountStr = formatToman(payload.converted_irr, 0);
         const params = {
             usdAmount: formatNumber(payload.usd_amount),
             date: formatDateForDisplay(payload.applied_date),
-            irrAmount: formatNumber(payload.converted_irr, 0),
-            rate: formatNumber(payload.rate_irr_per_usd),
+            irrAmount: `${formatNumber(payload.converted_irr, 0)} IRR (${tomanAmountStr})`,
+            rate: `${formatNumber(payload.rate_irr_per_usd)} IRR (${tomanRateStr})`,
         };
         return format(t('summary_convert'), params);
     }
@@ -592,6 +609,9 @@
         const box = document.getElementById('convert-result');
         if (!box || !payload) return;
 
+        const rateToman = formatToman(payload.rate_irr_per_usd);
+        const convertedToman = formatToman(payload.converted_irr, 0);
+
         box.innerHTML = `
             <div class="result-cards">
                 <div class="result-card">
@@ -599,11 +619,13 @@
                     <span class="result-card-date">${formatDateForDisplay(payload.applied_date)}</span>
                     ${fallbackBadge(payload)}
                     <span class="result-card-value">${formatNumber(payload.rate_irr_per_usd)} IRR</span>
+                    <span class="result-card-toman">(${rateToman})</span>
                     <span class="result-card-caption">${t('result_rate_applied')}</span>
                 </div>
                 <div class="result-card">
                     <span class="result-card-label">${t('result_converted_irr')}</span>
                     <span class="result-card-value large">${formatNumber(payload.converted_irr, 0)} IRR</span>
+                    <span class="result-card-toman">(${convertedToman})</span>
                     <span class="result-card-caption">$${formatNumber(payload.usd_amount)} USD</span>
                 </div>
             </div>
@@ -722,7 +744,7 @@
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            label: (item) => (item.raw === null ? 'No data' : `${formatNumber(item.raw)} IRR/USD`),
+                            label: (item) => (item.raw === null ? 'No data' : `${formatNumber(item.raw)} IRR/USD (${formatToman(item.raw)}/USD)`),
                         },
                     },
                 },

@@ -124,12 +124,24 @@ h1, h2, h3 {
     grid-column: 1;
     justify-self: start;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 0.55rem;
     background: var(--color-surface-container-high);
     border: 1px solid var(--color-outline-variant);
     border-radius: var(--radius-full);
-    padding: 0.5rem 1.1rem;
+    padding: 0.45rem 1.1rem;
+    position: relative;
+}
+
+.today-rate::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(136, 81, 27, 0.15);
+    flex-shrink: 0;
 }
 
 .today-rate-label {
@@ -140,12 +152,35 @@ h1, h2, h3 {
     color: var(--color-on-surface-variant);
 }
 
+.today-rate-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+}
+
 .today-rate-value {
     font-family: var(--font-mono);
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-primary);
+}
+
+.today-rate-toman {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-on-surface-variant);
+}
+
+.result-card-toman,
+.subtext-toman {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-on-surface-variant);
+    margin-top: 0.1rem;
 }
 
 .today-rate-date {
@@ -415,6 +450,13 @@ main {
     border-radius: var(--radius-lg);
     padding: 1.25rem;
     position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.result-card:hover {
+    border-color: var(--color-outline);
+    box-shadow: 0 4px 12px rgba(111, 46, 25, 0.08);
+    transform: translateY(-2px);
 }
 
 .result-card-label {
@@ -575,6 +617,28 @@ main {
     line-height: 1.6;
 }
 
+.footer-github {
+    margin-top: 0.5rem !important;
+}
+
+.footer-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-primary-container);
+}
+
+.footer-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
 .error-banner {
     position: fixed;
     bottom: 1rem;
@@ -633,3 +697,99 @@ main {
         justify-self: center;
     }
 }
+
+/* ---------------------------------------------------------------------
+ * Motion & Keyframe Animations
+ * --------------------------------------------------------------------- */
+.tab-panel:not([hidden]) {
+    animation: panelFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.result-box:not([hidden]) {
+    animation: resultBoxReveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.result-box:not([hidden]) .result-card {
+    animation: cardPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.result-box:not([hidden]) .result-card:nth-child(1) { animation-delay: 0.04s; }
+.result-box:not([hidden]) .result-card:nth-child(2) { animation-delay: 0.09s; }
+.result-box:not([hidden]) .result-card:nth-child(3) { animation-delay: 0.14s; }
+
+.result-summary {
+    animation: summaryFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+.error-banner:not([hidden]) {
+    animation: bannerSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes panelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes resultBoxReveal {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardPopIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes summaryFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bannerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tab-panel:not([hidden]),
+    .result-box:not([hidden]),
+    .result-box:not([hidden]) .result-card,
+    .result-summary,
+    .error-banner:not([hidden]) {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+
