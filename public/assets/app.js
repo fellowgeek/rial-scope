@@ -41,6 +41,7 @@
             btn_reload: 'Reload',
             gap_note: 'Note: no data is available between 2010-01-01 and 2011-11-26; the chart shows an explicit break rather than an interpolated line.',
             footer_note: 'Data spans 1950–2026. When a selected date has no trading data (weekend/holiday), the nearest prior available date is applied automatically.',
+            footer_github_html: 'The datasets and source code are available on <a href="https://github.com/fellowgeek/rial-scope" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>.',
             result_usd_at_a: 'USD value at Date A',
             result_usd_at_b: 'USD value at Date B',
             result_usd_a: 'Item A in USD',
@@ -94,6 +95,7 @@
             btn_reload: 'بارگذاری مجدد',
             gap_note: 'توجه: هیچ داده‌ای بین تاریخ‌های ۲۰۱۰-۰۱-۰۱ و ۲۰۱۱-۱۱-۲۶ موجود نیست؛ نمودار به‌جای درون‌یابی، یک شکاف آشکار نمایش می‌دهد.',
             footer_note: 'داده‌ها از سال ۱۹۵۰ تا ۲۰۲۶ را در بر می‌گیرد. هنگامی که تاریخ انتخابی داده معاملاتی نداشته باشد (تعطیلات/آخر هفته)، نزدیک‌ترین تاریخ قبلی موجود به‌طور خودکار اعمال می‌شود.',
+            footer_github_html: 'داده‌ها و کد منبع پروژه در <a href="https://github.com/fellowgeek/rial-scope" target="_blank" rel="noopener noreferrer" class="footer-link">گیت‌هاب</a> در دسترس است.',
             result_usd_at_a: 'ارزش دلاری در تاریخ الف',
             result_usd_at_b: 'ارزش دلاری در تاریخ ب',
             result_usd_a: 'کالای الف به دلار',
@@ -201,6 +203,9 @@
     function applyTranslations() {
         document.querySelectorAll('[data-i18n]').forEach((el) => {
             el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+            el.innerHTML = t(el.dataset.i18nHtml);
         });
 
         const html = document.getElementById('html-root');

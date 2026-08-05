@@ -148,6 +148,7 @@
 
 <footer class="app-footer">
     <p data-i18n="footer_note">Data spans 1950–2026. When a selected date has no trading data (weekend/holiday), the nearest prior available date is applied automatically.</p>
+    <p class="footer-github" data-i18n-html="footer_github_html">The datasets and source code are available on <a href="https://github.com/fellowgeek/rial-scope" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>.</p>
 </footer>
 
 <div id="error-banner" class="error-banner" hidden role="alert"></div>

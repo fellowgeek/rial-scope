@@ -617,6 +617,28 @@ main {
     line-height: 1.6;
 }
 
+.footer-github {
+    margin-top: 0.5rem !important;
+}
+
+.footer-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-primary-container);
+}
+
+.footer-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
 .error-banner {
     position: fixed;
     bottom: 1rem;
