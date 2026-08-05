@@ -124,12 +124,24 @@ h1, h2, h3 {
     grid-column: 1;
     justify-self: start;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 0.55rem;
     background: var(--color-surface-container-high);
     border: 1px solid var(--color-outline-variant);
     border-radius: var(--radius-full);
-    padding: 0.5rem 1.1rem;
+    padding: 0.45rem 1.1rem;
+    position: relative;
+}
+
+.today-rate::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(136, 81, 27, 0.15);
+    flex-shrink: 0;
 }
 
 .today-rate-label {
@@ -140,12 +152,35 @@ h1, h2, h3 {
     color: var(--color-on-surface-variant);
 }
 
+.today-rate-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+}
+
 .today-rate-value {
     font-family: var(--font-mono);
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-primary);
+}
+
+.today-rate-toman {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-on-surface-variant);
+}
+
+.result-card-toman,
+.subtext-toman {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-on-surface-variant);
+    margin-top: 0.1rem;
 }
 
 .today-rate-date {
