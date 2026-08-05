@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T10:12:15Z",
+  "title": "Design System: Rial Scope",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Deep Terracotta",
+        "canonical": "#6f2e19",
+        "tonalRamp": ["#3b1409", "#532011", "#6f2e19", "#8c442e", "#aa5c44", "#c8765d", "#e39278", "#fcd2c7"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Warm Amber",
+        "canonical": "#88511b",
+        "tonalRamp": ["#422405", "#61380e", "#88511b", "#ab6c2c", "#cf883e", "#e8aa61", "#fbc88b", "#fde5c3"]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Warm Rose White",
+        "canonical": "#fff8f6",
+        "tonalRamp": ["#201a19", "#54433e", "#87736d", "#dac1bb", "#ebe0dd", "#f1e6e3", "#f7ebe8", "#fff8f6"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Heading",
+        "purpose": "Main section titles (h2)."
+      },
+      "headline": {
+        "displayName": "Header Title",
+        "purpose": "Application bar title (h1)."
+      },
+      "body": {
+        "displayName": "Body Text",
+        "purpose": "General UI text, intro paragraphs, and inputs."
+      },
+      "label": {
+        "displayName": "Monospace Metric Label",
+        "purpose": "Currency values, exchange rates, dates, and uppercase captions."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tonal",
+        "value": "0 4px 16px rgba(111, 46, 25, 0.08)",
+        "purpose": "Tonal elevation shadow for main cards."
+      },
+      {
+        "name": "button-primary",
+        "value": "0 4px 12px rgba(111, 46, 25, 0.25)",
+        "purpose": "Warm drop shadow for primary call-to-action buttons."
+      }
+    ],
+    "motion": [
+      {
+        "name": "standard-ease",
+        "value": "0.15s ease",
+        "purpose": "Default duration and easing for hover, background, and focus transitions."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "640px"
+      },
+      {
+        "name": "tablet",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call-to-action button for calculation forms.",
+      "html": "<button class=\"ds-btn-primary\">Calculate</button>",
+      "css": ".ds-btn-primary { background: #6f2e19; color: #ffffff; padding: 0.9rem 1.85rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 700; border: none; border-radius: 0.5rem; cursor: pointer; box-shadow: 0 4px 12px rgba(111, 46, 25, 0.25); transition: background-color 0.15s ease, transform 0.1s ease; } .ds-btn-primary:hover { background: #8c442e; } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #6f2e19; outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outline button for non-primary actions like reloading chart data.",
+      "html": "<button class=\"ds-btn-secondary\">Reload</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #6f2e19; border: 1px solid #dac1bb; padding: 0.9rem 1.85rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; cursor: pointer; transition: background-color 0.15s ease, transform 0.1s ease; } .ds-btn-secondary:hover { background: #f1e6e3; } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid #6f2e19; outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Standard form input for amounts and dates.",
+      "html": "<input type=\"text\" class=\"ds-input\" placeholder=\"YYYY-MM-DD\" value=\"2026-08-05\">",
+      "css": ".ds-input { padding: 0.85rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 600; background: #fdf1ee; color: #201a19; width: 100%; transition: background-color 0.15s ease, box-shadow 0.15s ease; } .ds-input:hover { background: #f7ebe8; } .ds-input:focus { outline: none; background: #ffffff; box-shadow: 0 0 0 3px rgba(111, 46, 25, 0.18); }"
+    },
+    {
+      "name": "Navigation Tab",
+      "kind": "nav",
+      "refersTo": "nav-tab",
+      "description": "Header navigation tab button.",
+      "html": "<button class=\"ds-tab-btn ds-active\">Revalue Amount</button>",
+      "css": ".ds-tab-btn { border: none; border-bottom: 2px solid transparent; background: none; margin-bottom: -1px; padding: 0 0.1rem 0.8rem; cursor: pointer; font-family: 'Work Sans', sans-serif; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #54433e; transition: color 0.15s ease, border-color 0.15s ease; } .ds-tab-btn:hover { color: #6f2e19; } .ds-tab-btn.ds-active { color: #6f2e19; border-bottom-color: #6f2e19; } .ds-tab-btn:focus-visible { outline: 2px solid #6f2e19; outline-offset: 4px; border-radius: 0.25rem; }"
+    },
+    {
+      "name": "Result Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard output card displaying date, rate, and converted financial value.",
+      "html": "<div class=\"ds-result-card\"><span class=\"ds-card-label\">Applied Rate</span><span class=\"ds-card-date\">2024-03-20</span><span class=\"ds-card-value\">605,000 IRR</span><span class=\"ds-card-caption\">Per 1 USD</span></div>",
+      "css": ".ds-result-card { display: flex; flex-direction: column; gap: 0.4rem; background: #fdf1ee; border: 1px solid #dac1bb; border-radius: 0.75rem; padding: 1.25rem; } .ds-card-label { font-size: 0.72rem; font-weight: 700; color: #87736d; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Work Sans', sans-serif; } .ds-card-date { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #54433e; } .ds-card-value { font-family: 'JetBrains Mono', monospace; font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 0.15rem; color: #201a19; } .ds-card-caption { font-size: 0.8rem; color: #54433e; font-family: 'Work Sans', sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Precision Observatory",
+    "overview": "Rial Scope employs a warm, high-trust financial aesthetic built upon a warm terracotta and amber palette, structured tonal surfaces, disciplined typography, and log-scale historical clarity. Designed for offline-first local deployment, the interface prioritizes legibility, responsive card alignment, and subtle state transitions without superficial AI slop or unnecessary decorative overlays.",
+    "keyCharacteristics": [
+      "Warm Terracotta Base: Warm rose-tinted neutral backgrounds (#fff8f6) paired with deep terracotta accents (#6f2e19).",
+      "Disciplined Monospace Data: Financial values, rates, and ISO dates are rendered in JetBrains Mono for rapid scanability.",
+      "Tonal Layering: Surface depth is expressed through subtle tonal elevation (#ffffff, #fdf1ee, #f7ebe8) and soft directional shadows rather than heavy borders or halos.",
+      "Bilingual Fluidity: Native LTR (English) and RTL (Persian) support with seamless structural symmetry."
+    ],
+    "rules": [
+      {
+        "name": "The Tonal Layering Rule",
+        "body": "Depth is established through stepped surface container tones (#ffffff -> #fdf1ee -> #f7ebe8 -> #f1e6e3). Hard dark borders and pure black outlines are strictly forbidden.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Metric Rule",
+        "body": "Every currency value, exchange rate, and date string must be rendered using --font-mono (JetBrains Mono) to guarantee vertical alignment across data cards.",
+        "section": "typography"
+      },
+      {
+        "name": "The Soft Shadow Rule",
+        "body": "Shadows must always carry a warm tint derived from --color-primary (rgba(111, 46, 25, ...)). Neutral gray or pure black shadows are prohibited.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use repeat(auto-fit, minmax(240px, 1fr)) for card layouts to maintain visual balance regardless of card counts.",
+      "Do preserve visible keyboard focus rings (:focus-visible) with 2-4px outline offsets on all interactive elements.",
+      "Do use JetBrains Mono for all numeric values, dates, and rates."
+    ],
+    "donts": [
+      "Don't use decorative 4px top stripes or side-tab accent lines on cards or callouts.",
+      "Don't draw linear interpolation lines across unpopulated historical coverage gaps (e.g. 2010–2011).",
+      "Don't use hard black (#000000) for text or borders; use --color-on-surface (#201a19) and --color-outline-variant (#dac1bb)."
+    ]
+  }
+}
