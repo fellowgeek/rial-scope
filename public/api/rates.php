@@ -174,6 +174,13 @@ function dispatchRatesAction(RateRepository $repository, Calculator $calculator,
                 }
             }
 
+            if ($dateA > $dateB) {
+                [$dateA, $dateB] = [$dateB, $dateA];
+                if (isset($params['price_a'], $params['price_b'])) {
+                    [$params['price_a'], $params['price_b']] = [$params['price_b'], $params['price_a']];
+                }
+            }
+
             $resolved = $repository->compare($dateA, $dateB);
 
             if ($resolved['date_a']['applied_date'] === null || $resolved['date_b']['applied_date'] === null) {
