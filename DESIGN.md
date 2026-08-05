@@ -36,6 +36,20 @@ typography:
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: "-0.01em"
+  headline-mobile:
+    fontFamily: "'Manrope', -apple-system, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 700
+    lineHeight: 1.2
+  value-md:
+    fontFamily: "'JetBrains Mono', monospace"
+    fontSize: "1.55rem"
+    fontWeight: 700
+    letterSpacing: "-0.02em"
+  value-sm:
+    fontFamily: "'JetBrains Mono', monospace"
+    fontSize: "1.05rem"
+    fontWeight: 700
   title:
     fontFamily: "'Work Sans', -apple-system, sans-serif"
     fontSize: "1rem"
@@ -46,11 +60,34 @@ typography:
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.5
+  summary:
+    fontFamily: "'Work Sans', -apple-system, sans-serif"
+    fontSize: "0.95rem"
+    lineHeight: 1.6
+  date:
+    fontFamily: "'JetBrains Mono', monospace"
+    fontSize: "0.9rem"
+  caption:
+    fontFamily: "'Work Sans', -apple-system, sans-serif"
+    fontSize: "0.85rem"
+    lineHeight: 1.6
+  subtext:
+    fontFamily: "'Work Sans', -apple-system, sans-serif"
+    fontSize: "0.8rem"
+  tab:
+    fontFamily: "'Work Sans', -apple-system, sans-serif"
+    fontSize: "0.78rem"
+    fontWeight: 600
+    letterSpacing: "0.05em"
   label:
     fontFamily: "'Work Sans', -apple-system, sans-serif"
     fontSize: "0.72rem"
     fontWeight: 600
     letterSpacing: "0.05em"
+  badge:
+    fontFamily: "'Work Sans', -apple-system, sans-serif"
+    fontSize: "0.65rem"
+    fontWeight: 700
 rounded:
   sm: "0.25rem"
   md: "0.5rem"
