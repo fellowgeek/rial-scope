@@ -25,6 +25,7 @@
 <main>
     <nav class="tabs" role="tablist">
         <button role="tab" aria-selected="true" aria-controls="panel-revalue" data-tab="revalue" class="tab-btn active" data-i18n="tab_revalue">Revalue Amount</button>
+        <button role="tab" aria-selected="false" aria-controls="panel-convert" data-tab="convert" class="tab-btn" data-i18n="tab_convert">USD Converter</button>
         <button role="tab" aria-selected="false" aria-controls="panel-compare" data-tab="compare" class="tab-btn" data-i18n="tab_compare">Compare Item Prices</button>
         <button role="tab" aria-selected="false" aria-controls="panel-history" data-tab="history" class="tab-btn" data-i18n="tab_history">History Explorer</button>
     </nav>
@@ -54,6 +55,30 @@
                 <button type="submit" class="btn-primary" data-i18n="btn_calculate">Calculate</button>
             </form>
             <div id="revalue-result" class="result-box" hidden aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- Workflow 3: USD to IRR Conversion for a single date -->
+    <section id="panel-convert" class="tab-panel" role="tabpanel" hidden>
+        <div class="panel-heading">
+            <h2 data-i18n="convert_heading">USD to IRR Converter</h2>
+            <p class="panel-intro" data-i18n="convert_intro">Convert US Dollars to Iranian Rials based on the exchange rate for a selected date.</p>
+        </div>
+        <div class="calc-card">
+            <form id="convert-form" class="calc-form" novalidate>
+                <div class="date-row">
+                    <div class="field">
+                        <label for="convert-amount-usd" data-i18n="label_amount_usd">Amount (USD)</label>
+                        <input type="text" id="convert-amount-usd" class="amount-input" name="amount_usd" inputmode="decimal" placeholder="1" autocomplete="off" required>
+                    </div>
+                    <div class="field">
+                        <label for="convert-date" data-i18n="label_date">Date</label>
+                        <input type="text" id="convert-date" class="date-input" name="date" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" data-i18n="btn_calculate">Calculate</button>
+            </form>
+            <div id="convert-result" class="result-box" hidden aria-live="polite"></div>
         </div>
     </section>
 

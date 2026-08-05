@@ -152,4 +152,60 @@ class ApiEndpointTest
         [$status] = $this->dispatch('compare', ['date_a' => '2012-01-01']);
         Assert::assertSame(400, $status);
     }
+
+    public function testCompareReversesDatesWhenDateAIsLaterThanDateB(): void
+    {
+        // 2024-03-18 (later) passed as date_a, 2012-01-01 (earlier) passed as date_b
+        [$status, $payload] = $this->dispatch('compare', [
+            'date_a' => '2024-03-18',
+            'date_b' => '2012-01-01',
+            'irr_amount' => '100000000',
+        ]);
+
+        Assert::assertSame(200, $status);
+        Assert::assertSame('2012-01-01', $payload['date_a']['applied_date']);
+        Assert::assertSame('2024-03-17', $payload['date_b']['applied_date']);
+        // Purchasing power delta from earlier (2012) to later (2024) is negative
+        Assert::assertTrue($payload['revalue']['delta_usd'] < 0);
+    }
+
+    public function testCompareReversesPricesWhenDateAIsLaterThanDateB(): void
+    {
+        // Item A (2024-03-18, 2,000,000,000 IRR) vs Item B (2012-01-01, 50,000,000 IRR)
+        [$status, $payload] = $this->dispatch('compare', [
+            'date_a' => '2024-03-18',
+            'date_b' => '2012-01-01',
+            'price_a' => '2000000000',
+            'price_b' => '50000000',
+        ]);
+
+        Assert::assertSame(200, $status);
+        Assert::assertSame('2012-01-01', $payload['date_a']['applied_date']);
+        Assert::assertSame('2024-03-17', $payload['date_b']['applied_date']);
+        // Swapped price_a (50M at 2012) = $2,873.56 vs swapped price_b (2B at 2024) = $3,305.79
+        Assert::assertTrue($payload['compare_items']['delta_usd'] > 0);
+    }
+
+    public function testLookupWithUsdAmountIncludesConvertedIrrPayload(): void
+    {
+        [$status, $payload] = $this->dispatch('lookup', [
+            'date' => '2024-03-20',
+            'usd_amount' => '100',
+        ]);
+
+        Assert::assertSame(200, $status);
+        Assert::assertSame(100.0, $payload['usd_amount']);
+        Assert::assertSame(60500000.0, $payload['converted_irr']);
+    }
+
+    public function testLookupWithInvalidUsdAmountReturns400(): void
+    {
+        [$status, $payload] = $this->dispatch('lookup', [
+            'date' => '2024-03-20',
+            'usd_amount' => '-50',
+        ]);
+
+        Assert::assertSame(400, $status);
+        Assert::assertNotNull($payload['error']);
+    }
 }

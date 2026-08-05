@@ -59,6 +59,13 @@
             summary_compare_more: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} more expensive in real US Dollar terms.',
             summary_compare_less: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} cheaper in real US Dollar terms.',
             summary_compare_same: 'Both items cost the same, ${usdA}, in real US Dollar terms despite the different Rial prices and dates.',
+            tab_convert: 'USD Converter',
+            convert_heading: 'USD to IRR Converter',
+            convert_intro: 'Convert US Dollars to Iranian Rials based on the exchange rate for a selected date.',
+            label_amount_usd: 'Amount (USD)',
+            result_converted_irr: 'Converted Amount (IRR)',
+            result_rate_applied: 'Applied Rate',
+            summary_convert: '${usdAmount} USD on {date} equals {irrAmount} IRR at an exchange rate of {rate} IRR per USD.',
         },
         fa: {
             app_title: 'کاوشگر نرخ ارز دلار به ریال',
@@ -104,6 +111,13 @@
             summary_compare_more: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} گران‌تر است.',
             summary_compare_less: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} ارزان‌تر است.',
             summary_compare_same: 'هر دو کالا از نظر ارزش واقعی دلاری برابر بودند، {usdA}$، با وجود قیمت‌ها و تاریخ‌های ریالی متفاوت.',
+            tab_convert: 'تبدیل دلار به ریال',
+            convert_heading: 'مبدل دلار به ریال',
+            convert_intro: 'تبدیل دلار آمریکا به ریال ایران بر اساس نرخ ارز در تاریخ انتخابی.',
+            label_amount_usd: 'مبلغ (دلار)',
+            result_converted_irr: 'مبلغ تبدیل شده (ریال)',
+            result_rate_applied: 'نرخ اعمال‌شده',
+            summary_convert: 'در تاریخ {date}، مبلغ ${usdAmount} دلار معادل {irrAmount} ریال با نرخ {rate} ریال به ازای هر دلار است.',
         },
     };
 
@@ -125,6 +139,7 @@
         latestRate: null,
         lastRevalue: null,
         lastCompare: null,
+        lastConvert: null,
     };
 
     function t(key) {
@@ -209,6 +224,9 @@
         }
         if (state.lastCompare) {
             renderCompareResult(state.lastCompare.payload);
+        }
+        if (state.lastConvert) {
+            renderConvertResult(state.lastConvert.payload);
         }
     }
 
@@ -560,6 +578,73 @@
         });
     }
 
+    function buildConvertSummary(payload) {
+        const params = {
+            usdAmount: formatNumber(payload.usd_amount),
+            date: formatDateForDisplay(payload.applied_date),
+            irrAmount: formatNumber(payload.converted_irr, 0),
+            rate: formatNumber(payload.rate_irr_per_usd),
+        };
+        return format(t('summary_convert'), params);
+    }
+
+    function renderConvertResult(payload) {
+        const box = document.getElementById('convert-result');
+        if (!box || !payload) return;
+
+        box.innerHTML = `
+            <div class="result-cards">
+                <div class="result-card">
+                    <span class="result-card-label">${t('label_date')}</span>
+                    <span class="result-card-date">${formatDateForDisplay(payload.applied_date)}</span>
+                    ${fallbackBadge(payload)}
+                    <span class="result-card-value">${formatNumber(payload.rate_irr_per_usd)} IRR</span>
+                    <span class="result-card-caption">${t('result_rate_applied')}</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-card-label">${t('result_converted_irr')}</span>
+                    <span class="result-card-value large">${formatNumber(payload.converted_irr, 0)} IRR</span>
+                    <span class="result-card-caption">$${formatNumber(payload.usd_amount)} USD</span>
+                </div>
+            </div>
+            <p class="result-summary">${buildConvertSummary(payload)}</p>
+        `;
+        box.hidden = false;
+        state.lastConvert = { payload };
+    }
+
+    function initConvertForm() {
+        const form = document.getElementById('convert-form');
+        if (!form) return;
+
+        form.addEventListener('submit', async (evt) => {
+            evt.preventDefault();
+
+            const amountUsd = parseAmountValue(document.getElementById('convert-amount-usd'));
+            const convertDate = document.getElementById('convert-date').value;
+
+            if (!Number.isFinite(amountUsd) || amountUsd <= 0) {
+                showError(t('error_invalid_amount'));
+                return;
+            }
+            if (!convertDate) {
+                showError(t('error_invalid_dates'));
+                return;
+            }
+
+            try {
+                const payload = await apiGet({
+                    action: 'lookup',
+                    date: convertDate,
+                    usd_amount: String(amountUsd),
+                });
+                renderConvertResult(payload);
+            } catch (err) {
+                showError(err.message || t('error_generic'));
+            }
+        });
+    }
+
     // ---------------------------------------------------------------------
     // Chart / History explorer
     // ---------------------------------------------------------------------
@@ -694,6 +779,7 @@
         initDatePickers();
         initAmountMasks();
         initRevalueForm();
+        initConvertForm();
         initCompareForm();
         initHistoryControls();
 
