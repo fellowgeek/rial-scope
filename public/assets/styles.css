@@ -415,6 +415,13 @@ main {
     border-radius: var(--radius-lg);
     padding: 1.25rem;
     position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.result-card:hover {
+    border-color: var(--color-outline);
+    box-shadow: 0 4px 12px rgba(111, 46, 25, 0.08);
+    transform: translateY(-2px);
 }
 
 .result-card-label {
@@ -633,3 +640,99 @@ main {
         justify-self: center;
     }
 }
+
+/* ---------------------------------------------------------------------
+ * Motion & Keyframe Animations
+ * --------------------------------------------------------------------- */
+.tab-panel:not([hidden]) {
+    animation: panelFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.result-box:not([hidden]) {
+    animation: resultBoxReveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.result-box:not([hidden]) .result-card {
+    animation: cardPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.result-box:not([hidden]) .result-card:nth-child(1) { animation-delay: 0.04s; }
+.result-box:not([hidden]) .result-card:nth-child(2) { animation-delay: 0.09s; }
+.result-box:not([hidden]) .result-card:nth-child(3) { animation-delay: 0.14s; }
+
+.result-summary {
+    animation: summaryFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+.error-banner:not([hidden]) {
+    animation: bannerSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes panelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes resultBoxReveal {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardPopIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes summaryFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bannerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tab-panel:not([hidden]),
+    .result-box:not([hidden]),
+    .result-box:not([hidden]) .result-card,
+    .result-summary,
+    .error-banner:not([hidden]) {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+
