@@ -152,4 +152,27 @@ class ApiEndpointTest
         [$status] = $this->dispatch('compare', ['date_a' => '2012-01-01']);
         Assert::assertSame(400, $status);
     }
+
+    public function testLookupWithUsdAmountIncludesConvertedIrrPayload(): void
+    {
+        [$status, $payload] = $this->dispatch('lookup', [
+            'date' => '2024-03-20',
+            'usd_amount' => '100',
+        ]);
+
+        Assert::assertSame(200, $status);
+        Assert::assertSame(100.0, $payload['usd_amount']);
+        Assert::assertSame(60500000.0, $payload['converted_irr']);
+    }
+
+    public function testLookupWithInvalidUsdAmountReturns400(): void
+    {
+        [$status, $payload] = $this->dispatch('lookup', [
+            'date' => '2024-03-20',
+            'usd_amount' => '-50',
+        ]);
+
+        Assert::assertSame(400, $status);
+        Assert::assertNotNull($payload['error']);
+    }
 }

@@ -141,7 +141,23 @@ function dispatchRatesAction(RateRepository $repository, Calculator $calculator,
                 return [404, ['error' => "No observation found on or before {$date}."]];
             }
 
-            return [200, resolutionPayload($resolved)];
+            $payload = resolutionPayload($resolved);
+
+            if (isset($params['usd_amount']) && is_numeric($params['usd_amount'])) {
+                $usdAmount = (float) $params['usd_amount'];
+
+                if ($usdAmount <= 0) {
+                    return [400, ['error' => 'usd_amount must be a positive number.']];
+                }
+
+                $rateIrrPerUsd = (float) ($resolved['rate']['rate_irr_per_usd'] ?? 0);
+                if ($rateIrrPerUsd > 0) {
+                    $payload['usd_amount'] = $usdAmount;
+                    $payload['converted_irr'] = $calculator->usdToIrr($usdAmount, $rateIrrPerUsd);
+                }
+            }
+
+            return [200, $payload];
 
         case 'compare':
             $dateA = $params['date_a'] ?? null;
