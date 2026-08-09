@@ -584,6 +584,45 @@ main {
     margin-bottom: 1.5rem;
 }
 
+.history-presets {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    align-self: flex-end;
+    background: var(--color-surface-container-low);
+    padding: 0.25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-outline-variant);
+}
+
+.btn-preset {
+    background: transparent;
+    border: none;
+    border-radius: calc(var(--radius) - 3px);
+    padding: 0.65rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-on-surface-variant);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-preset:hover {
+    background: var(--color-surface-container-high);
+    color: var(--color-on-surface);
+}
+
+.btn-preset:active {
+    transform: scale(0.96);
+}
+
+.btn-preset.active {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow: 0 2px 6px rgba(111, 46, 25, 0.2);
+}
+
 .history-controls .btn-secondary {
     /* Override the form-context align-self: flex-start so the button's
        bottom edge lines up with the date inputs' bottom edge. */

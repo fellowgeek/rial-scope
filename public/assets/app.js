@@ -68,6 +68,10 @@
             result_rate_applied: 'Applied Rate',
             summary_convert: '${usdAmount} USD on {date} equals {irrAmount} at an exchange rate of {rate} per USD.',
             unit_toman: 'Toman',
+            preset_ytd: 'YTD',
+            preset_1y: '1Y',
+            preset_5y: '5Y',
+            preset_all: 'All',
         },
         fa: {
             app_title: 'کاوشگر نرخ ارز دلار به ریال',
@@ -122,6 +126,10 @@
             result_rate_applied: 'نرخ اعمال‌شده',
             summary_convert: 'در تاریخ {date}، مبلغ ${usdAmount} دلار معادل {irrAmount} با نرخ {rate} به ازای هر دلار است.',
             unit_toman: 'تومان',
+            preset_ytd: 'از ابتدای سال',
+            preset_1y: '۱ ساله',
+            preset_5y: '۵ ساله',
+            preset_all: 'همه',
         },
     };
 
@@ -357,19 +365,38 @@
     // ---------------------------------------------------------------------
     // Date pickers
     // ---------------------------------------------------------------------
-    // History explorer's From/To fields intentionally default to empty so the
-    // initial chart shows the full 1950-today range rather than a single day.
-    const HISTORY_RANGE_INPUT_IDS = new Set(['history-from', 'history-to']);
+    // History explorer's From input defaults to Year To Date (YYYY-01-01),
+    // while To remains empty (open-ended to latest date).
+    function getYtdStartDate() {
+        const year = state.maxDate ? state.maxDate.slice(0, 4) : new Date().getFullYear().toString();
+        return `${year}-01-01`;
+    }
+
+    function getNYearsAgoDate(years) {
+        if (!state.maxDate) return undefined;
+        const d = new Date(state.maxDate + 'T00:00:00Z');
+        d.setUTCFullYear(d.getUTCFullYear() - years);
+        return d.toISOString().slice(0, 10);
+    }
 
     function initDatePickers() {
+        const ytdFrom = getYtdStartDate();
         document.querySelectorAll('.date-input').forEach((input) => {
             attachDateMask(input);
-            const isHistoryRangeInput = HISTORY_RANGE_INPUT_IDS.has(input.id);
+            let defaultDate;
+            if (input.id === 'history-from') {
+                defaultDate = ytdFrom;
+            } else if (input.id === 'history-to') {
+                defaultDate = undefined;
+            } else {
+                defaultDate = state.maxDate || undefined;
+            }
+
             const fp = window.flatpickr(input, {
                 dateFormat: 'Y-m-d',
                 minDate: state.minDate,
                 maxDate: state.maxDate || undefined,
-                defaultDate: isHistoryRangeInput ? undefined : (state.maxDate || undefined),
+                defaultDate: defaultDate,
                 allowInput: true,
             });
             state.pickers.push(fp);
@@ -753,7 +780,12 @@
                     const index = elements[0].index;
                     const label = labels[index];
                     if (label && /^\d{4}-\d{2}-\d{2}$/.test(label)) {
-                        document.getElementById('history-from').value = label;
+                        const fromInput = document.getElementById('history-from');
+                        fromInput.value = label;
+                        if (fromInput._flatpickr) {
+                            fromInput._flatpickr.setDate(label, false);
+                        }
+                        updatePresetFromInputs();
                     }
                 },
             },
@@ -762,11 +794,13 @@
     }
 
     async function loadHistory(from, to) {
+        const fromVal = from !== undefined ? from : (document.getElementById('history-from')?.value || undefined);
+        const toVal = to !== undefined ? to : (document.getElementById('history-to')?.value || undefined);
         try {
             const payload = await apiGet({
                 action: 'series',
-                ...(from ? { from } : {}),
-                ...(to ? { to } : {}),
+                ...(fromVal ? { from: fromVal } : {}),
+                ...(toVal ? { to: toVal } : {}),
             });
             renderChart(payload.series);
         } catch (err) {
@@ -774,11 +808,92 @@
         }
     }
 
+    function setHistoryDateRange(fromDate, toDate) {
+        const fromInput = document.getElementById('history-from');
+        const toInput = document.getElementById('history-to');
+
+        fromInput.value = fromDate || '';
+        if (fromInput._flatpickr) {
+            if (fromDate) {
+                fromInput._flatpickr.setDate(fromDate, false);
+            } else {
+                fromInput._flatpickr.clear();
+            }
+        }
+
+        toInput.value = toDate || '';
+        if (toInput._flatpickr) {
+            if (toDate) {
+                toInput._flatpickr.setDate(toDate, false);
+            } else {
+                toInput._flatpickr.clear();
+            }
+        }
+    }
+
+    function setActivePreset(rangeName) {
+        document.querySelectorAll('.btn-preset').forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.range === rangeName);
+        });
+    }
+
+    function updatePresetFromInputs() {
+        const fromVal = document.getElementById('history-from').value;
+        const toVal = document.getElementById('history-to').value;
+        const ytdFrom = getYtdStartDate();
+        const y1From = getNYearsAgoDate(1);
+        const y5From = getNYearsAgoDate(5);
+
+        if (!toVal && fromVal === ytdFrom) {
+            setActivePreset('ytd');
+        } else if (!toVal && fromVal === y1From) {
+            setActivePreset('1y');
+        } else if (!toVal && fromVal === y5From) {
+            setActivePreset('5y');
+        } else if (!toVal && !fromVal) {
+            setActivePreset('all');
+        } else {
+            setActivePreset(null);
+        }
+    }
+
     function initHistoryControls() {
         document.getElementById('history-reload').addEventListener('click', () => {
             const from = document.getElementById('history-from').value || undefined;
             const to = document.getElementById('history-to').value || undefined;
+            updatePresetFromInputs();
             loadHistory(from, to);
+        });
+
+        document.querySelectorAll('.btn-preset').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const range = btn.dataset.range;
+                let fromDate;
+                let toDate;
+
+                if (range === 'ytd') {
+                    fromDate = getYtdStartDate();
+                } else if (range === '1y') {
+                    fromDate = getNYearsAgoDate(1);
+                } else if (range === '5y') {
+                    fromDate = getNYearsAgoDate(5);
+                } else if (range === 'all') {
+                    fromDate = undefined;
+                    toDate = undefined;
+                }
+
+                setHistoryDateRange(fromDate, toDate);
+                setActivePreset(range);
+                loadHistory(fromDate, toDate);
+            });
+        });
+
+        ['history-from', 'history-to'].forEach((id) => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('change', updatePresetFromInputs);
+                input.addEventListener('input', updatePresetFromInputs);
+            }
         });
     }
 
