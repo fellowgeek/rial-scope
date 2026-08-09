@@ -136,6 +136,12 @@
                     <label for="history-to" data-i18n="label_to">To</label>
                     <input type="text" id="history-to" class="date-input" placeholder="YYYY-MM-DD" maxlength="10" autocomplete="off">
                 </div>
+                <div class="history-presets" role="group" aria-label="Preset ranges">
+                    <button type="button" class="btn-preset active" data-range="ytd" data-i18n="preset_ytd">YTD</button>
+                    <button type="button" class="btn-preset" data-range="1y" data-i18n="preset_1y">1Y</button>
+                    <button type="button" class="btn-preset" data-range="5y" data-i18n="preset_5y">5Y</button>
+                    <button type="button" class="btn-preset" data-range="all" data-i18n="preset_all">All</button>
+                </div>
                 <button id="history-reload" type="button" class="btn-secondary" data-i18n="btn_reload">Reload</button>
             </div>
             <div class="chart-wrapper">
