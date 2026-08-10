@@ -72,6 +72,9 @@
             preset_1y: '1Y',
             preset_5y: '5Y',
             preset_all: 'All',
+            chart_y_axis: 'IRR per USD (log scale)',
+            chart_dataset_label: 'IRR per USD',
+            chart_no_data: 'No data',
         },
         fa: {
             app_title: 'کاوشگر نرخ ارز دلار به ریال',
@@ -130,6 +133,9 @@
             preset_1y: '۱ ساله',
             preset_5y: '۵ ساله',
             preset_all: 'همه',
+            chart_y_axis: 'ریال به ازای هر دلار (مقیاس لگاریتمی)',
+            chart_dataset_label: 'ریال به ازای هر دلار',
+            chart_no_data: 'بدون داده',
         },
     };
 
@@ -249,6 +255,13 @@
         if (state.lastConvert) {
             renderConvertResult(state.lastConvert.payload);
         }
+        if (state.chart) {
+            if (state.chart.__rawSeries) {
+                renderChart(state.chart.__rawSeries);
+            } else {
+                state.chart.resize();
+            }
+        }
     }
 
     function initLanguageToggle() {
@@ -286,7 +299,11 @@
                 });
 
                 if (btn.dataset.tab === 'history' && state.chart) {
-                    state.chart.resize();
+                    requestAnimationFrame(() => {
+                        if (state.chart) {
+                            state.chart.resize();
+                        }
+                    });
                 }
             });
         });
@@ -740,7 +757,7 @@
                 labels,
                 datasets: [
                     {
-                        label: 'IRR per USD',
+                        label: t('chart_dataset_label'),
                         data,
                         borderColor: '#8c442e',
                         backgroundColor: 'rgba(140, 68, 46, 0.12)',
@@ -762,7 +779,7 @@
                     },
                     y: {
                         type: 'logarithmic',
-                        title: { display: true, text: 'IRR per USD (log scale)', color: '#54433e' },
+                        title: { display: true, text: t('chart_y_axis'), color: '#54433e' },
                         ticks: { color: '#54433e' },
                         grid: { color: '#ebe0dd' },
                     },
@@ -771,7 +788,7 @@
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            label: (item) => (item.raw === null ? 'No data' : `${formatNumber(item.raw)} IRR/USD (${formatToman(item.raw)}/USD)`),
+                            label: (item) => (item.raw === null ? t('chart_no_data') : `${formatNumber(item.raw)} IRR/USD (${formatToman(item.raw)}/USD)`),
                         },
                     },
                 },
