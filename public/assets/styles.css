@@ -582,6 +582,7 @@ main {
     gap: 1.25rem;
     flex-wrap: wrap;
     margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 .history-presets {
@@ -632,7 +633,16 @@ main {
 .chart-wrapper {
     position: relative;
     width: 100%;
+    min-width: 0;
     min-height: 300px;
+    direction: ltr;
+}
+
+.chart-wrapper canvas {
+    direction: ltr;
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
 }
 
 .gap-note {
