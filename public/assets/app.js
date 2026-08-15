@@ -48,18 +48,21 @@
             result_usd_b: 'Item B in USD',
             result_delta_usd: 'Dollar delta',
             result_delta_pct: 'Percent delta',
+            result_rial_loss: 'Rial value change',
+            result_rate_change: 'USD rate change',
+            result_item_price_delta: 'Item price delta (USD)',
             chip_gain: 'Gain',
             chip_loss: 'Loss',
             fallback_badge: 'Requested {requested} → Applied {applied}',
             error_generic: 'Something went wrong. Please check your inputs and try again.',
             error_invalid_amount: 'Please enter a valid positive amount.',
             error_invalid_dates: 'Please select valid dates.',
-            summary_revalue_gain: '{amount} IRR bought ${usdA} on {dateA} but bought ${usdB} on {dateB} — a gain of {magnitude} in USD terms, meaning the Rial strengthened against the US Dollar over this period.',
-            summary_revalue_loss: '{amount} IRR bought ${usdA} on {dateA} but only buys ${usdB} on {dateB} — a loss of {magnitude} in USD terms, meaning the Rial weakened against the US Dollar over this period.',
-            summary_revalue_same: '{amount} IRR was worth ${usdA} on both {dateA} and {dateB} — its USD purchasing power did not change over this period.',
-            summary_compare_more: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} more expensive in real US Dollar terms.',
-            summary_compare_less: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} cheaper in real US Dollar terms.',
-            summary_compare_same: 'Both items cost the same, ${usdA}, in real US Dollar terms despite the different Rial prices and dates.',
+            summary_revalue_gain: '{amount} bought ${usdA} on {dateA} but bought ${usdB} on {dateB} — a gain of {magnitude} in USD terms, meaning the Rial strengthened by {rialLoss} against the US Dollar ({rateChange} rate change) over this period.',
+            summary_revalue_loss: '{amount} bought ${usdA} on {dateA} but only buys ${usdB} on {dateB} — a loss of {magnitude} in USD terms, meaning the Rial lost {rialLoss} of its purchasing power against the US Dollar ({rateChange} rate change) over this period.',
+            summary_revalue_same: '{amount} was worth ${usdA} on both {dateA} and {dateB} — its USD purchasing power did not change over this period.',
+            summary_compare_more: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} more expensive in real US Dollar terms. Over this period, the Rial value changed by {rialLoss} ({rateChange} rate change).',
+            summary_compare_less: 'Item A cost ${usdA} on {dateA}, while Item B cost ${usdB} on {dateB} — Item B is {magnitude} cheaper in real US Dollar terms. Over this period, the Rial value changed by {rialLoss} ({rateChange} rate change).',
+            summary_compare_same: 'Both items cost the same, ${usdA}, in real US Dollar terms despite the different Rial prices and dates. Over this period, the Rial value changed by {rialLoss} ({rateChange} rate change).',
             tab_convert: 'USD Converter',
             convert_heading: 'USD to IRR Converter',
             convert_intro: 'Convert US Dollars to Iranian Rials based on the exchange rate for a selected date.',
@@ -109,18 +112,21 @@
             result_usd_b: 'کالای ب به دلار',
             result_delta_usd: 'اختلاف دلاری',
             result_delta_pct: 'اختلاف درصدی',
+            result_rial_loss: 'تغییر ارزش ریال',
+            result_rate_change: 'تغییر نرخ دلار',
+            result_item_price_delta: 'تغییر قیمت دلاری کالا',
             chip_gain: 'سود',
             chip_loss: 'زیان',
             fallback_badge: 'درخواستی {requested} ← اعمال‌شده {applied}',
             error_generic: 'مشکلی پیش آمد. لطفاً ورودی‌ها را بررسی کرده و دوباره تلاش کنید.',
             error_invalid_amount: 'لطفاً یک مبلغ مثبت معتبر وارد کنید.',
             error_invalid_dates: 'لطفاً تاریخ‌های معتبر انتخاب کنید.',
-            summary_revalue_gain: '{amount} ریال در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} معادل {usdB}$ شد — سودی معادل {magnitude} از نظر ارزش دلاری، یعنی ریال در این بازه در برابر دلار آمریکا تقویت شده است.',
-            summary_revalue_loss: '{amount} ریال در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} تنها معادل {usdB}$ می‌شود — زیانی معادل {magnitude} از نظر ارزش دلاری، یعنی ریال در این بازه در برابر دلار آمریکا تضعیف شده است.',
-            summary_revalue_same: '{amount} ریال هم در تاریخ {dateA} و هم در تاریخ {dateB} معادل {usdA}$ بود — قدرت خرید دلاری آن در این بازه تغییری نکرده است.',
-            summary_compare_more: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} گران‌تر است.',
-            summary_compare_less: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} ارزان‌تر است.',
-            summary_compare_same: 'هر دو کالا از نظر ارزش واقعی دلاری برابر بودند، {usdA}$، با وجود قیمت‌ها و تاریخ‌های ریالی متفاوت.',
+            summary_revalue_gain: '{amount} در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} معادل {usdB}$ شد — سودی معادل {magnitude} از نظر ارزش دلاری؛ در این بازه ریال {rialLoss} تقویت شد ({rateChange} تغییر نرخ دلار).',
+            summary_revalue_loss: '{amount} در تاریخ {dateA} معادل {usdA}$ بود، اما در تاریخ {dateB} تنها معادل {usdB}$ می‌شود — زیانی معادل {magnitude} از نظر ارزش دلاری؛ در این بازه ریال {rialLoss} از ارزش خود را در برابر دلار از دست داد ({rateChange} تغییر نرخ دلار).',
+            summary_revalue_same: '{amount} هم در تاریخ {dateA} و هم در تاریخ {dateB} معادل {usdA}$ بود — قدرت خرید دلاری آن در این بازه تغییری نکرده است.',
+            summary_compare_more: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} گران‌تر است (در این بازه ارزش ریال {rialLoss} تغییر کرد، {rateChange} تغییر نرخ).',
+            summary_compare_less: 'کالای الف در تاریخ {dateA} معادل {usdA}$ بود، در حالی‌که کالای ب در تاریخ {dateB} معادل {usdB}$ بود — کالای ب از نظر ارزش واقعی دلاری {magnitude} ارزان‌تر است (در این بازه ارزش ریال {rialLoss} تغییر کرد، {rateChange} تغییر نرخ).',
+            summary_compare_same: 'هر دو کالا از نظر ارزش واقعی دلاری برابر بودند، {usdA}$، با وجود قیمت‌ها و تاریخ‌های ریالی متفاوت (در این بازه ارزش ریال {rialLoss} تغییر کرد، {rateChange} تغییر نرخ).',
             tab_convert: 'تبدیل دلار به ریال',
             convert_heading: 'مبدل دلار به ریال',
             convert_intro: 'تبدیل دلار آمریکا به ریال ایران بر اساس نرخ ارز در تاریخ انتخابی.',
@@ -170,7 +176,7 @@
     }
 
     function formatDateForDisplay(isoDate) {
-        return isoDate || '';
+        return isoDate ? `\u200E${isoDate}\u200E` : '';
     }
 
     function formatNumber(value, fractionDigits) {
@@ -178,6 +184,28 @@
             maximumFractionDigits: fractionDigits ?? 2,
             minimumFractionDigits: 0,
         }).format(value);
+    }
+
+    function formatSmartPercent(value, showSign = false) {
+        if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+        const abs = Math.abs(value);
+        let fractionDigits = 2;
+        if (abs >= 99.999 && abs < 100) {
+            fractionDigits = 4;
+        } else if (abs >= 99.99 && abs < 100) {
+            fractionDigits = 4;
+        } else if (abs >= 99.9 && abs < 100) {
+            fractionDigits = 3;
+        } else if (abs >= 99 && abs < 100) {
+            fractionDigits = 3;
+        } else if (abs > 0 && abs < 0.01) {
+            fractionDigits = 4;
+        } else if (abs > 0 && abs < 0.1) {
+            fractionDigits = 3;
+        }
+        const formatted = formatNumber(value, fractionDigits);
+        const sign = showSign && value > 0 ? '+' : '';
+        return `${sign}${formatted}%`;
     }
 
     function formatToman(irrValue, fractionDigits) {
@@ -277,7 +305,8 @@
 
         state.latestRate = latest;
         valueEl.textContent = `${formatNumber(latest.rate_irr_per_usd)} IRR`;
-        dateEl.textContent = format(t('today_rate_as_of'), { date: latest.date });
+        const dateHtml = `<span dir="ltr" class="today-rate-date-val">${formatDateForDisplay(latest.date)}</span>`;
+        dateEl.innerHTML = format(t('today_rate_as_of'), { date: dateHtml });
     }
 
     // ---------------------------------------------------------------------
@@ -456,12 +485,14 @@
     }
 
     function pctPhrase(deltaPercent) {
-        return deltaPercent === null ? '' : ` (${formatNumber(Math.abs(deltaPercent))}%)`;
+        return deltaPercent === null || deltaPercent === undefined ? '' : ` (${formatSmartPercent(Math.abs(deltaPercent), false)})`;
     }
 
     function buildRevalueSummary(amount, dateA, dateB, revalue) {
         const tomanStr = formatToman(amount, 0);
         const amountDisplay = `${formatNumber(amount, 0)} IRR (${tomanStr})`;
+        const rialLossPct = revalue.rial_value_delta_percent ?? revalue.delta_percent;
+        const rateChangePct = revalue.exchange_rate_delta_percent;
         const params = {
             amount: amountDisplay,
             usdA: formatNumber(revalue.usd_at_a),
@@ -469,6 +500,8 @@
             dateA: formatDateForDisplay(dateA.applied_date),
             dateB: formatDateForDisplay(dateB.applied_date),
             magnitude: `$${formatNumber(Math.abs(revalue.delta_usd))}${pctPhrase(revalue.delta_percent)}`,
+            rialLoss: formatSmartPercent(Math.abs(rialLossPct), false),
+            rateChange: formatSmartPercent(rateChangePct, true),
         };
 
         if (revalue.delta_usd > 0) {
@@ -481,12 +514,16 @@
     }
 
     function buildCompareSummary(dateA, dateB, compareItems) {
+        const rialLossPct = compareItems.rial_value_delta_percent;
+        const rateChangePct = compareItems.exchange_rate_delta_percent;
         const params = {
             usdA: formatNumber(compareItems.usd_a),
             usdB: formatNumber(compareItems.usd_b),
             dateA: formatDateForDisplay(dateA.applied_date),
             dateB: formatDateForDisplay(dateB.applied_date),
             magnitude: `$${formatNumber(Math.abs(compareItems.delta_usd))}${pctPhrase(compareItems.delta_percent)}`,
+            rialLoss: formatSmartPercent(Math.abs(rialLossPct), false),
+            rateChange: formatSmartPercent(rateChangePct, true),
         };
 
         if (compareItems.delta_usd > 0) {
@@ -501,8 +538,9 @@
     function renderRevalueResult(payload, amount) {
         const box = document.getElementById('revalue-result');
         const { date_a, date_b, revalue } = payload;
-        const pctClass = deltaClass(revalue.delta_percent ?? 0);
-        const pctText = revalue.delta_percent === null ? '—' : `${formatNumber(revalue.delta_percent)}%`;
+        const pctClass = deltaClass(revalue.delta_usd);
+        const rialLossVal = revalue.rial_value_delta_percent ?? revalue.delta_percent;
+        const rateChangeVal = revalue.exchange_rate_delta_percent;
 
         box.innerHTML = `
             <div class="result-cards">
@@ -524,7 +562,10 @@
                     ${deltaChip(revalue.delta_usd)}
                     <span class="result-card-label">${t('result_delta_usd')}</span>
                     <span class="result-card-value large ${deltaClass(revalue.delta_usd)}">${deltaIcon(revalue.delta_usd)} $${formatNumber(Math.abs(revalue.delta_usd))}</span>
-                    <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
+                    <div class="result-card-meta">
+                        <span class="result-card-subcaption">${t('result_rial_loss')}: <strong>${formatSmartPercent(rialLossVal, true)}</strong></span>
+                        <span class="result-card-subcaption">${t('result_rate_change')}: <strong>${formatSmartPercent(rateChangeVal, true)}</strong></span>
+                    </div>
                 </div>
             </div>
             <p class="result-summary">${buildRevalueSummary(amount, date_a, date_b, revalue)}</p>
@@ -536,8 +577,9 @@
     function renderCompareResult(payload) {
         const box = document.getElementById('compare-result');
         const { date_a, date_b, compare_items } = payload;
-        const pctClass = deltaClass(compare_items.delta_percent ?? 0);
-        const pctText = compare_items.delta_percent === null ? '—' : `${formatNumber(compare_items.delta_percent)}%`;
+        const pctClass = deltaClass(compare_items.delta_usd);
+        const rialLossVal = compare_items.rial_value_delta_percent;
+        const rateChangeVal = compare_items.exchange_rate_delta_percent;
 
         box.innerHTML = `
             <div class="result-cards">
@@ -559,7 +601,11 @@
                     ${deltaChip(compare_items.delta_usd)}
                     <span class="result-card-label">${t('result_delta_usd')}</span>
                     <span class="result-card-value large ${deltaClass(compare_items.delta_usd)}">${deltaIcon(compare_items.delta_usd)} $${formatNumber(Math.abs(compare_items.delta_usd))}</span>
-                    <span class="result-card-caption">${t('result_delta_pct')}: ${pctText}</span>
+                    <div class="result-card-meta">
+                        <span class="result-card-subcaption">${t('result_item_price_delta')}: <strong>${formatSmartPercent(compare_items.delta_percent, true)}</strong></span>
+                        <span class="result-card-subcaption">${t('result_rial_loss')}: <strong>${formatSmartPercent(rialLossVal, true)}</strong></span>
+                        <span class="result-card-subcaption">${t('result_rate_change')}: <strong>${formatSmartPercent(rateChangeVal, true)}</strong></span>
+                    </div>
                 </div>
             </div>
             <p class="result-summary">${buildCompareSummary(date_a, date_b, compare_items)}</p>

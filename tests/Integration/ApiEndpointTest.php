@@ -132,6 +132,8 @@ class ApiEndpointTest
         Assert::assertSame(200, $status);
         Assert::assertNotNull($payload['revalue']);
         Assert::assertTrue($payload['revalue']['delta_usd'] < 0);
+        Assert::assertNotNull($payload['revalue']['rial_value_delta_percent']);
+        Assert::assertNotNull($payload['revalue']['exchange_rate_delta_percent']);
     }
 
     public function testCompareWithPricesIncludesItemComparisonPayload(): void
@@ -145,6 +147,8 @@ class ApiEndpointTest
 
         Assert::assertSame(200, $status);
         Assert::assertNotNull($payload['compare_items']);
+        Assert::assertNotNull($payload['compare_items']['rial_value_delta_percent']);
+        Assert::assertNotNull($payload['compare_items']['exchange_rate_delta_percent']);
     }
 
     public function testCompareMissingDatesReturns400(): void
