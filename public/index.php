@@ -1,11 +1,21 @@
+<?php
+declare(strict_types=1);
+
+function asset(string $path): string
+{
+    $fullPath = __DIR__ . '/' . ltrim($path, '/');
+    $version = file_exists($fullPath) ? (string) filemtime($fullPath) : '1';
+    return $path . '?v=' . $version;
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="app_title">Rial Scope</title>
-<link rel="stylesheet" href="assets/vendor/flatpickr.min.css">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="<?= asset('assets/vendor/flatpickr.min.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/styles.css') ?>">
 </head>
 <body>
 <header class="app-header">
@@ -159,8 +169,8 @@
 
 <div id="error-banner" class="error-banner" hidden role="alert"></div>
 
-<script src="assets/vendor/chart.umd.min.js"></script>
-<script src="assets/vendor/flatpickr.min.js"></script>
-<script src="assets/app.js"></script>
+<script src="<?= asset('assets/vendor/chart.umd.min.js') ?>"></script>
+<script src="<?= asset('assets/vendor/flatpickr.min.js') ?>"></script>
+<script src="<?= asset('assets/app.js') ?>"></script>
 </body>
 </html>

@@ -38,6 +38,10 @@ class CalculatorTest
         Assert::assertEqualsWithDelta(165.69733724379049, $result['usd_at_b'], 0.001);
         Assert::assertGreaterThan(0, -$result['delta_usd']); // delta_usd is negative
         Assert::assertTrue($result['delta_percent'] < 0);
+        Assert::assertEqualsWithDelta(-97.116866, $result['rial_value_delta_percent'], 0.001);
+        Assert::assertEqualsWithDelta(3368.44827, $result['exchange_rate_delta_percent'], 0.001);
+        Assert::assertEqualsWithDelta(17400.0, $result['rate_a'], 0.001);
+        Assert::assertEqualsWithDelta(603510.0, $result['rate_b'], 0.001);
     }
 
     public function testRevalueDetectsPurchasingPowerGain(): void
@@ -46,6 +50,20 @@ class CalculatorTest
 
         Assert::assertTrue($result['delta_usd'] > 0);
         Assert::assertTrue($result['delta_percent'] > 0);
+        Assert::assertTrue($result['rial_value_delta_percent'] > 0);
+        Assert::assertTrue($result['exchange_rate_delta_percent'] < 0);
+    }
+
+    public function testRialDevaluationExtremeCalculation(): void
+    {
+        // 1979 (rate 70.51) to 2026 (rate 1879850)
+        $rialLoss = $this->calculator->rialValueDeltaPercent(70.51, 1879850.0);
+        $rateGain = $this->calculator->exchangeRateDeltaPercent(70.51, 1879850.0);
+
+        // Rial value change: ((70.51 / 1879850) - 1) * 100 = -99.996249...
+        Assert::assertEqualsWithDelta(-99.996249, $rialLoss, 0.0001);
+        // Exchange rate increase: ((1879850 - 70.51) / 70.51) * 100 = 2665975.7339...%
+        Assert::assertEqualsWithDelta(2665975.7339, $rateGain, 0.1);
     }
 
     public function testComparePricesPercentDelta(): void
@@ -57,6 +75,8 @@ class CalculatorTest
         Assert::assertEqualsWithDelta(3313.94674487581, $result['usd_b'], 0.001);
         Assert::assertEqualsWithDelta(440.3835264850054, $result['delta_usd'], 0.001);
         Assert::assertEqualsWithDelta(15.325346721678187, $result['delta_percent'], 0.001);
+        Assert::assertEqualsWithDelta(-97.116866, $result['rial_value_delta_percent'], 0.001);
+        Assert::assertEqualsWithDelta(3368.44827, $result['exchange_rate_delta_percent'], 0.001);
     }
 
     public function testZeroBaselineUsdProducesNullPercentDelta(): void

@@ -8,3 +8,5 @@
 /.vscode/
 AGENTS.md
 
+.mcp_memory
+memory/
