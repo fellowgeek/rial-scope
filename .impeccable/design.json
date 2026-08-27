@@ -1,74 +1,59 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-05T10:12:15Z",
+  "generatedAt": "2026-08-26T19:43:00.000Z",
   "title": "Design System: Rial Scope",
   "extensions": {
     "colorMeta": {
       "primary": {
         "role": "primary",
-        "displayName": "Deep Terracotta",
-        "canonical": "#6f2e19",
-        "tonalRamp": ["#3b1409", "#532011", "#6f2e19", "#8c442e", "#aa5c44", "#c8765d", "#e39278", "#fcd2c7"]
+        "displayName": "Deep Navy Ink",
+        "canonical": "#0f172a",
+        "tonalRamp": ["#020617", "#0f172a", "#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1"]
       },
       "secondary": {
         "role": "secondary",
-        "displayName": "Warm Amber",
-        "canonical": "#88511b",
-        "tonalRamp": ["#422405", "#61380e", "#88511b", "#ab6c2c", "#cf883e", "#e8aa61", "#fbc88b", "#fde5c3"]
+        "displayName": "Carbon Blue Ink",
+        "canonical": "#2563eb",
+        "tonalRamp": ["#1e3a8a", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#eff6ff"]
       },
-      "background": {
+      "cardstock": {
         "role": "neutral",
-        "displayName": "Warm Rose White",
-        "canonical": "#fff8f6",
-        "tonalRamp": ["#201a19", "#54433e", "#87736d", "#dac1bb", "#ebe0dd", "#f1e6e3", "#f7ebe8", "#fff8f6"]
+        "displayName": "Crisp Cardstock",
+        "canonical": "#f8fafc",
+        "tonalRamp": ["#0f172a", "#334155", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f1f5f9", "#f8fafc"]
+      },
+      "stamp-red": {
+        "role": "error",
+        "displayName": "Stamped Crimson",
+        "canonical": "#dc2626",
+        "tonalRamp": ["#7f1d1d", "#991b1b", "#b91c1c", "#dc2626", "#ef4444", "#f87171", "#fca5a5", "#fef2f2"]
+      },
+      "stamp-green": {
+        "role": "success",
+        "displayName": "Stamped Green",
+        "canonical": "#16a34a",
+        "tonalRamp": ["#14532d", "#166534", "#15803d", "#16a34a", "#22c55e", "#4ade80", "#86efac", "#f0fdf4"]
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display Heading",
-        "purpose": "Main section titles (h2)."
-      },
-      "headline": {
-        "displayName": "Header Title",
-        "purpose": "Application bar title (h1)."
-      },
-      "body": {
-        "displayName": "Body Text",
-        "purpose": "General UI text, intro paragraphs, and inputs."
-      },
-      "label": {
-        "displayName": "Monospace Metric Label",
-        "purpose": "Currency values, exchange rates, dates, and uppercase captions."
-      }
+      "display": { "displayName": "Display", "purpose": "Section headings only." },
+      "headline": { "displayName": "Headline", "purpose": "Application header." },
+      "title": { "displayName": "Title", "purpose": "Tab coupons and legends." },
+      "body": { "displayName": "Body", "purpose": "Summaries and notes." },
+      "label": { "displayName": "Label", "purpose": "Form field labels." },
+      "mono": { "displayName": "Mono", "purpose": "Rates, dates, and metrics." }
     },
     "shadows": [
-      {
-        "name": "tonal",
-        "value": "0 4px 16px rgba(111, 46, 25, 0.08)",
-        "purpose": "Tonal elevation shadow for main cards."
-      },
-      {
-        "name": "button-primary",
-        "value": "0 4px 12px rgba(111, 46, 25, 0.25)",
-        "purpose": "Warm drop shadow for primary call-to-action buttons."
-      }
+      { "name": "brutalist-monolith", "value": "6px 6px 0px #000000", "purpose": "Outer booklet container." },
+      { "name": "brutalist-button", "value": "4px 4px 0px #0f172a", "purpose": "Action buttons at rest." },
+      { "name": "brutalist-button-active", "value": "1px 1px 0px #0f172a", "purpose": "Action buttons when pressed." }
     ],
     "motion": [
-      {
-        "name": "standard-ease",
-        "value": "0.15s ease",
-        "purpose": "Default duration and easing for hover, background, and focus transitions."
-      }
+      { "name": "ease-brutalist", "value": "cubic-bezier(0, 0, 0.2, 1)", "purpose": "Crisp mechanical state transitions." }
     ],
     "breakpoints": [
-      {
-        "name": "mobile",
-        "value": "640px"
-      },
-      {
-        "name": "tablet",
-        "value": "720px"
-      }
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1200px" }
     ]
   },
   "components": [
@@ -76,78 +61,64 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Main call-to-action button for calculation forms.",
-      "html": "<button class=\"ds-btn-primary\">Calculate</button>",
-      "css": ".ds-btn-primary { background: #6f2e19; color: #ffffff; padding: 0.9rem 1.85rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 700; border: none; border-radius: 0.5rem; cursor: pointer; box-shadow: 0 4px 12px rgba(111, 46, 25, 0.25); transition: background-color 0.15s ease, transform 0.1s ease; } .ds-btn-primary:hover { background: #8c442e; } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #6f2e19; outline-offset: 3px; }"
+      "description": "Solid brutalist calculate action button.",
+      "html": "<button class=\"ds-btn-primary\">CALCULATE</button>",
+      "css": ".ds-btn-primary { background: #0f172a; color: #ffffff; padding: 0.85rem 1.75rem; font-family: 'Manrope', sans-serif; font-size: 0.92rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; border: 2.5px solid #0f172a; border-radius: 2px; box-shadow: 4px 4px 0px #0f172a; cursor: pointer; transition: transform 0.1s ease, box-shadow 0.1s ease; } .ds-btn-primary:hover { background: #1e293b; } .ds-btn-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px #0f172a; }"
     },
     {
-      "name": "Secondary Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Outline button for non-primary actions like reloading chart data.",
-      "html": "<button class=\"ds-btn-secondary\">Reload</button>",
-      "css": ".ds-btn-secondary { background: transparent; color: #6f2e19; border: 1px solid #dac1bb; padding: 0.9rem 1.85rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; cursor: pointer; transition: background-color 0.15s ease, transform 0.1s ease; } .ds-btn-secondary:hover { background: #f1e6e3; } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid #6f2e19; outline-offset: 3px; }"
-    },
-    {
-      "name": "Text Input",
-      "kind": "input",
-      "refersTo": "input",
-      "description": "Standard form input for amounts and dates.",
-      "html": "<input type=\"text\" class=\"ds-input\" placeholder=\"YYYY-MM-DD\" value=\"2026-08-05\">",
-      "css": ".ds-input { padding: 0.85rem 1rem; border: 1px solid transparent; border-radius: 0.5rem; font-family: 'Work Sans', sans-serif; font-size: 1rem; font-weight: 600; background: #fdf1ee; color: #201a19; width: 100%; transition: background-color 0.15s ease, box-shadow 0.15s ease; } .ds-input:hover { background: #f7ebe8; } .ds-input:focus { outline: none; background: #ffffff; box-shadow: 0 0 0 3px rgba(111, 46, 25, 0.18); }"
-    },
-    {
-      "name": "Navigation Tab",
+      "name": "Ticket Tab",
       "kind": "nav",
       "refersTo": "nav-tab",
-      "description": "Header navigation tab button.",
-      "html": "<button class=\"ds-tab-btn ds-active\">Revalue Amount</button>",
-      "css": ".ds-tab-btn { border: none; border-bottom: 2px solid transparent; background: none; margin-bottom: -1px; padding: 0 0.1rem 0.8rem; cursor: pointer; font-family: 'Work Sans', sans-serif; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #54433e; transition: color 0.15s ease, border-color 0.15s ease; } .ds-tab-btn:hover { color: #6f2e19; } .ds-tab-btn.ds-active { color: #6f2e19; border-bottom-color: #6f2e19; } .ds-tab-btn:focus-visible { outline: 2px solid #6f2e19; outline-offset: 4px; border-radius: 0.25rem; }"
+      "description": "Perforated tear-off coupon navigation tab.",
+      "html": "<button class=\"ds-tab-btn active\"><span class=\"ds-tab-idx\">CPN 01</span><span class=\"ds-tab-title\">REVALUE AMOUNT</span></button>",
+      "css": ".ds-tab-btn { border: 2px solid #0f172a; border-bottom: none; border-radius: 6px 6px 0 0; background: #f8fafc; padding: 0.65rem 1.25rem 0.75rem; display: flex; flex-direction: column; align-items: flex-start; cursor: pointer; } .ds-tab-idx { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 800; color: #2563eb; } .ds-tab-title { font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; color: #0f172a; }"
     },
     {
-      "name": "Result Card",
-      "kind": "card",
-      "refersTo": "card",
-      "description": "Standard output card displaying date, rate, and converted financial value.",
-      "html": "<div class=\"ds-result-card\"><span class=\"ds-card-label\">Applied Rate</span><span class=\"ds-card-date\">2024-03-20</span><span class=\"ds-card-value\">605,000 IRR</span><span class=\"ds-card-caption\">Per 1 USD</span></div>",
-      "css": ".ds-result-card { display: flex; flex-direction: column; gap: 0.4rem; background: #fdf1ee; border: 1px solid #dac1bb; border-radius: 0.75rem; padding: 1.25rem; } .ds-card-label { font-size: 0.72rem; font-weight: 700; color: #87736d; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Work Sans', sans-serif; } .ds-card-date { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #54433e; } .ds-card-value { font-family: 'JetBrains Mono', monospace; font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 0.15rem; color: #201a19; } .ds-card-caption { font-size: 0.8rem; color: #54433e; font-family: 'Work Sans', sans-serif; }"
+      "name": "Stamped Fallback Badge",
+      "kind": "chip",
+      "refersTo": "badge-fallback",
+      "description": "Official rubber-stamp indicator for non-trading trading-day fallback.",
+      "html": "<span class=\"ds-badge-fallback\">[FALLBACK: APPLIED 2026-08-26]</span>",
+      "css": ".ds-badge-fallback { border: 2px solid #dc2626; background: #fef2f2; color: #dc2626; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 2px; transform: rotate(-1.5deg); display: inline-block; }"
     }
   ],
   "narrative": {
-    "northStar": "The Precision Observatory",
-    "overview": "Rial Scope employs a warm, high-trust financial aesthetic built upon a warm terracotta and amber palette, structured tonal surfaces, disciplined typography, and log-scale historical clarity. Designed for offline-first local deployment, the interface prioritizes legibility, responsive card alignment, and subtle state transitions without superficial AI slop or unnecessary decorative overlays.",
+    "northStar": "The Jet-Age Ticket Ledger & Swiss Neo-Brutalist Observatory",
+    "overview": "Rial Scope marries the tactile discipline of vintage airline coupon wallets and carbon-copy transit manifests with the unapologetic structural rigor of Swiss Neo-Brutalism. Designed for an offline-first local deployment, the interface presents financial conversions, 75-year historical exchange rate trajectories, and purchasing power deltas as verified flight coupons and official stamped registers.",
     "keyCharacteristics": [
-      "Warm Terracotta Base: Warm rose-tinted neutral backgrounds (#fff8f6) paired with deep terracotta accents (#6f2e19).",
-      "Disciplined Monospace Data: Financial values, rates, and ISO dates are rendered in JetBrains Mono for rapid scanability.",
-      "Tonal Layering: Surface depth is expressed through subtle tonal elevation (#ffffff, #fdf1ee, #f7ebe8) and soft directional shadows rather than heavy borders or halos.",
-      "Bilingual Fluidity: Native LTR (English) and RTL (Persian) support with seamless structural symmetry."
+      "Aviation Navy Mesh: Deep navy desktop background with subtle coordinates.",
+      "Perforated Ticket Coupons: Multi-leg ticket wallet structure with top tear-off tabs and semicircle punch notch cutouts.",
+      "Architectural Ink Borders: Heavy 2px to 3px solid ink borders and hard 6px offset shadows.",
+      "Official Stamped Seals: Red and green validation marks indicating fallback status and deltas.",
+      "Tabular Carbon-Copy Alignment: Strict monospace data columns for all rates and dates."
     ],
     "rules": [
       {
-        "name": "The Tonal Layering Rule",
-        "body": "Depth is established through stepped surface container tones (#ffffff -> #fdf1ee -> #f7ebe8 -> #f1e6e3). Hard dark borders and pure black outlines are strictly forbidden.",
+        "name": "The Ink-and-Stamp Rule",
+        "body": "Color is never applied as decorative ambient glows or soft pastels. Color exists strictly as solid structural ink, carbon-copy lines, or official pressed rubber stamps.",
         "section": "colors"
       },
       {
         "name": "The Tabular Metric Rule",
-        "body": "Every currency value, exchange rate, and date string must be rendered using --font-mono (JetBrains Mono) to guarantee vertical alignment across data cards.",
+        "body": "Every currency rate, historical date, and financial delta string must be rendered using --font-mono (JetBrains Mono) with tabular numeral alignment.",
         "section": "typography"
       },
       {
-        "name": "The Soft Shadow Rule",
-        "body": "Shadows must always carry a warm tint derived from --color-primary (rgba(111, 46, 25, ...)). Neutral gray or pure black shadows are prohibited.",
+        "name": "The Hard Offset Rule",
+        "body": "All shadows must use 0px blur radius with crisp directional offsets. Diffuse or gradient drop shadows are strictly prohibited.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do use repeat(auto-fit, minmax(240px, 1fr)) for card layouts to maintain visual balance regardless of card counts.",
-      "Do preserve visible keyboard focus rings (:focus-visible) with 2-4px outline offsets on all interactive elements.",
-      "Do use JetBrains Mono for all numeric values, dates, and rates."
+      "Do use 2px/3px solid black/navy borders (#0f172a) and hard 0-blur offset shadows for all structural cards.",
+      "Do preserve visible keyboard focus rings (:focus-visible) with 2-3px outline offsets.",
+      "Do render all currency amounts, rates, and dates in JetBrains Mono.",
+      "Do style fallback date notifications as official stamped verification marks."
     ],
     "donts": [
-      "Don't use decorative 4px top stripes or side-tab accent lines on cards or callouts.",
+      "Don't use soft pastel gradients, diffuse blurred drop shadows, or generic rounded SaaS cards.",
       "Don't draw linear interpolation lines across unpopulated historical coverage gaps (e.g. 2010–2011).",
-      "Don't use hard black (#000000) for text or borders; use --color-on-surface (#201a19) and --color-outline-variant (#dac1bb)."
+      "Don't use low-contrast text colors; always maintain high-contrast WCAG AAA readability."
     ]
   }
 }

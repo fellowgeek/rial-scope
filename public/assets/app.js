@@ -78,6 +78,25 @@
             chart_y_axis: 'IRR per USD (log scale)',
             chart_dataset_label: 'IRR per USD',
             chart_no_data: 'No data',
+            strip_coverage_label: 'HISTORICAL COVERAGE:',
+            strip_duration_badge: '75 YEARS',
+            strip_resolution_tag: 'DAILY & ANNUAL DATASETS',
+            gap_stamp: '[DISCONTINUITY DISPATCH]',
+            footer_stamp_title: 'OFFICIAL OBSERVED DATASET DISPATCH',
+            valid_coupon: 'VALID COUPON',
+            valid_log: 'VALID LOG',
+            entry_amount: 'ENTRY 01',
+            dep_date_a: 'DEP 01',
+            arr_date_b: 'ARR 02',
+            src_usd: 'SRC USD',
+            val_date: 'VAL DATE',
+            item_a_code: 'ITEM 01',
+            item_b_code: 'ITEM 02',
+            log_from: 'LOG FROM',
+            log_to: 'LOG TO',
+            form_action_revalue: 'PRESS TO EXECUTE RATE CALCULATION',
+            form_action_convert: 'EXECUTE CONVERSION MANIFEST',
+            form_action_compare: 'COMPARE DUAL-LEG ITEM VALUES',
         },
         fa: {
             app_title: 'کاوشگر نرخ ارز دلار به ریال',
@@ -142,6 +161,25 @@
             chart_y_axis: 'ریال به ازای هر دلار (مقیاس لگاریتمی)',
             chart_dataset_label: 'ریال به ازای هر دلار',
             chart_no_data: 'بدون داده',
+            strip_coverage_label: 'پوشش تاریخی داده‌ها:',
+            strip_duration_badge: '۷۵ سال',
+            strip_resolution_tag: 'مجموعه داده‌های روزانه و سالانه',
+            gap_stamp: '[گزارش عدم پیوستگی داده]',
+            footer_stamp_title: 'گزارش رسمی مجموعه داده‌های ثبت‌شده',
+            valid_coupon: 'کوپن معتبر',
+            valid_log: 'گزارش معتبر',
+            entry_amount: 'ورودی ۱',
+            dep_date_a: 'مبدا ۱',
+            arr_date_b: 'مقصد ۲',
+            src_usd: 'مبدا دلار',
+            val_date: 'تاریخ اعتبار',
+            item_a_code: 'کالای ۱',
+            item_b_code: 'کالای ۲',
+            log_from: 'ثبت از',
+            log_to: 'ثبت تا',
+            form_action_revalue: 'کلیک جهت محاسبه نرخ ارز',
+            form_action_convert: 'اجرای تبدیل ارزی',
+            form_action_compare: 'مقایسه ارزش دوگانه اقلام',
         },
     };
 
@@ -284,10 +322,12 @@
             renderConvertResult(state.lastConvert.payload);
         }
         if (state.chart) {
-            if (state.chart.__rawSeries) {
+            const historyPanel = document.getElementById('panel-history');
+            const isHistoryVisible = historyPanel && !historyPanel.hidden;
+            if (isHistoryVisible && state.chart.__rawSeries) {
                 renderChart(state.chart.__rawSeries);
-            } else {
-                state.chart.resize();
+            } else if (state.chart.__rawSeries) {
+                state.chartNeedsRender = true;
             }
         }
     }
@@ -327,12 +367,18 @@
                     panel.hidden = panel.id !== `panel-${btn.dataset.tab}`;
                 });
 
-                if (btn.dataset.tab === 'history' && state.chart) {
-                    requestAnimationFrame(() => {
-                        if (state.chart) {
-                            state.chart.resize();
-                        }
-                    });
+                if (btn.dataset.tab === 'history') {
+                    if (state.chartNeedsRender && state.chart && state.chart.__rawSeries) {
+                        state.chartNeedsRender = false;
+                        renderChart(state.chart.__rawSeries);
+                    } else if (state.chart) {
+                        requestAnimationFrame(() => {
+                            if (state.chart) {
+                                state.chart.resize();
+                                state.chart.update('none');
+                            }
+                        });
+                    }
                 }
             });
         });
@@ -427,6 +473,7 @@
 
     function initDatePickers() {
         const ytdFrom = getYtdStartDate();
+        const oneYearAgo = getNYearsAgoDate(1);
         document.querySelectorAll('.date-input').forEach((input) => {
             attachDateMask(input);
             let defaultDate;
@@ -434,6 +481,8 @@
                 defaultDate = ytdFrom;
             } else if (input.id === 'history-to') {
                 defaultDate = undefined;
+            } else if (input.id === 'revalue-date-b') {
+                defaultDate = oneYearAgo;
             } else {
                 defaultDate = state.maxDate || undefined;
             }
@@ -805,11 +854,17 @@
                     {
                         label: t('chart_dataset_label'),
                         data,
-                        borderColor: '#8c442e',
-                        backgroundColor: 'rgba(140, 68, 46, 0.12)',
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                        pointBackgroundColor: '#2563eb',
+                        pointBorderColor: '#0f172a',
+                        pointHoverBackgroundColor: '#0f172a',
+                        pointHoverBorderColor: '#2563eb',
+                        pointHoverRadius: 5,
+                        pointHoverBorderWidth: 2,
                         spanGaps: false,
                         pointRadius: 0,
-                        borderWidth: 1.75,
+                        borderWidth: 2.25,
                         tension: 0.1,
                         fill: true,
                     },
@@ -818,21 +873,37 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                rtl: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 scales: {
                     x: {
-                        ticks: { maxTicksLimit: 10, autoSkip: true, color: '#54433e' },
-                        grid: { color: '#ebe0dd' },
+                        position: 'bottom',
+                        ticks: { maxTicksLimit: 10, autoSkip: true, color: '#475569', font: { family: "'JetBrains Mono', monospace", weight: '600', size: 11 } },
+                        grid: { color: '#e2e8f0', lineWidth: 1 },
                     },
                     y: {
+                        position: 'left',
                         type: 'logarithmic',
-                        title: { display: true, text: t('chart_y_axis'), color: '#54433e' },
-                        ticks: { color: '#54433e' },
-                        grid: { color: '#ebe0dd' },
+                        title: { display: true, text: t('chart_y_axis'), color: '#0f172a', font: { family: state.lang === 'fa' ? "'Tahoma', sans-serif" : "'Manrope', sans-serif", weight: 'bold', size: 12 } },
+                        ticks: { color: '#475569', font: { family: "'JetBrains Mono', monospace", weight: '600', size: 11 } },
+                        grid: { color: '#e2e8f0', lineWidth: 1 },
                     },
                 },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        titleFont: { family: "'JetBrains Mono', monospace", weight: 'bold' },
+                        bodyFont: { family: "'JetBrains Mono', monospace", weight: '600' },
+                        padding: 10,
+                        borderColor: '#2563eb',
+                        borderWidth: 1.5,
+                        displayColors: false,
                         callbacks: {
                             label: (item) => (item.raw === null ? t('chart_no_data') : `${formatNumber(item.raw)} IRR/USD (${formatToman(item.raw)}/USD)`),
                         },
