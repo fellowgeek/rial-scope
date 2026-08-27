@@ -93,7 +93,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                     <div class="panel-heading">
                         <div class="panel-kicker-row">
                             <span class="panel-kicker">COUPON NO. 01 / PURCHASING POWER AUDIT</span>
-                            <span class="stamp-chip stamp-chip-valid" data-i18n="valid_coupon">VALID COUPON</span>
                         </div>
                         <h2 data-i18n="revalue_heading">Purchasing Power Analysis</h2>
                         <p class="panel-intro" data-i18n="revalue_intro">See how a fixed Rial amount's purchasing power in US Dollars changed between two dates.</p>
@@ -139,7 +138,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                     <div class="panel-heading">
                         <div class="panel-kicker-row">
                             <span class="panel-kicker">COUPON NO. 02 / DIRECT CONVERSION DISPATCH</span>
-                            <span class="stamp-chip stamp-chip-valid" data-i18n="valid_coupon">VALID COUPON</span>
                         </div>
                         <h2 data-i18n="convert_heading">USD to IRR Converter</h2>
                         <p class="panel-intro" data-i18n="convert_intro">Convert US Dollars to Iranian Rials based on the exchange rate for a selected date.</p>
@@ -176,7 +174,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                     <div class="panel-heading">
                         <div class="panel-kicker-row">
                             <span class="panel-kicker">COUPON NO. 03 / RELATIVE VALUE MANIFEST</span>
-                            <span class="stamp-chip stamp-chip-valid" data-i18n="valid_coupon">VALID COUPON</span>
                         </div>
                         <h2 data-i18n="compare_heading">Item Price Comparison</h2>
                         <p class="panel-intro" data-i18n="compare_intro">Compare two historical Rial prices for an item (e.g. a car) to see whether it got cheaper or more expensive in real US Dollar terms.</p>
@@ -227,7 +224,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
                     <div class="panel-heading">
                         <div class="panel-kicker-row">
                             <span class="panel-kicker">COUPON NO. 04 / 75-YEAR EXCHANGE ROUTE TELEMETRY</span>
-                            <span class="stamp-chip stamp-chip-valid" data-i18n="valid_log">VALID LOG</span>
                         </div>
                         <h2 data-i18n="history_heading">Historical Rate Explorer</h2>
                         <p class="panel-intro" data-i18n="history_intro">Explore the full USD/IRR rate history from 1950 to today.</p>
