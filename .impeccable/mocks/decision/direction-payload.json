@@ -1,0 +1,135 @@
+{
+  "title": "Choose the visual world",
+  "question": "Swiss Neo-Brutalist direction for Rial Scope. Select your preferred brutalist architectural structure.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Zurich International Grid",
+      "kicker": "THE ROLL",
+      "lineage": "Zurich International Typographic Style fused with modern Neo-Brutalism",
+      "thesis": "Uncompromising Swiss architectural brutalism: stark bone-white ground, massive grotesque display type, strict 3px solid black borders, hard offset drop shadows (5px 5px 0 #000), and International Klein Blue accents.",
+      "palette": [
+        "#0a0a0a",
+        "#f4f4f0",
+        "#0038ff",
+        "#ff3333",
+        "#ffea00",
+        "#ffffff"
+      ],
+      "materials": [
+        "raw concrete bone",
+        "3px solid black architectural borders",
+        "hard-offset black shadows (5px 5px 0)",
+        "unrounded geometric blocks (0px radius)"
+      ],
+      "viewport": "Massive grotesque rate callout (1 USD = 942,000 IRR) framed by thick brutalist grid rails, hard-edged calculation blocks that depress flat on click, and an unyielding monochrome tabular historical timeline.",
+      "risk": "Requires absolute precision in typographic hierarchy and micro-spacing rhythm to maintain clarity.",
+      "raised": [
+        {
+          "from": "jet-age-ticket-wallet",
+          "raise": "Stark stamped validation boxes with uppercase status marks (RECORDED, FALLBACK, REAL-TIME)."
+        },
+        {
+          "from": "miura-sheet",
+          "raise": "Asymmetric collapsible grid cells with crisp hairline crease dividers."
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "The Basel Safety-Orange Monolith",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Industrial Swiss poster typography & high-visibility brutalism",
+      "thesis": "High-visibility industrial brutalism: raw warm-gray concrete canvas, thick 4px black borders, vibrant safety orange highlights (#ff5500), heavy bold grotesk headlines, and zero-radius button blocks with hard 6px offset shadows.",
+      "palette": [
+        "#121212",
+        "#ebeae6",
+        "#ff5500",
+        "#00d26a",
+        "#ffffff"
+      ],
+      "materials": [
+        "warm concrete cardstock",
+        "4px stark black rules",
+        "hard geometric 6px offset shadows",
+        "high-visibility warning orange"
+      ],
+      "viewport": "Heavy modular monolith with stark orange section kickers, high-contrast revaluation comparison slabs, and raw mechanical form inputs.",
+      "risk": "Intense visual energy that commands absolute attention across every viewport.",
+      "comp": ".impeccable/mocks/decision/model-pick.png"
+    },
+    {
+      "id": "challenger-jet-age",
+      "label": "Jet-Age Ticket Ledger",
+      "verdict": "competitive",
+      "lineage": "Official transit coupon books and carbon-copy ticket registers",
+      "thesis": "Crisp ticket coupon layout with official navy/red ruling, punched-ticket tabs, red VOID/VALID stamps, and high-density tabular receipt cards.",
+      "palette": [
+        "#0f172a",
+        "#f8fafc",
+        "#dc2626",
+        "#2563eb",
+        "#6b21a8"
+      ],
+      "materials": [
+        "crisp ticket coupon cardstock",
+        "carbon-copy typography",
+        "official ink stamp badges"
+      ],
+      "viewport": "Tabbed calculation coupons with perforated tear-lines and official currency validation stamps.",
+      "case": "Fuses brilliantly with currency revaluation and historical date tracking; adds tactile bureaucratic authenticity to the brutalist structure.",
+      "risk": "Must maintain sharp financial instrument focus rather than looking like transit ephemera.",
+      "comp": ".impeccable/mocks/decision/challenger-jet-age.png",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet.webp"
+    },
+    {
+      "id": "challenger-eboy",
+      "label": "Pixorama Metropolis",
+      "verdict": "declined",
+      "lineage": "Isometric pixel art city grids",
+      "palette": [
+        "#ff0055",
+        "#00ffff",
+        "#ffff00",
+        "#000000"
+      ],
+      "materials": [
+        "hard pixel grid",
+        "isometric blocks"
+      ],
+      "case": "Fuses poorly with serious financial purchasing power and 75-year historical currency analysis.",
+      "kept": "Strict adherence to hard integer grid coordinates without blur or softening."
+    }
+  ],
+  "reroll": {
+    "registers": [
+      "safer",
+      "bolder"
+    ]
+  },
+  "buildPath": {
+    "value": "comp",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "Flat Clean Fintech SaaS",
+    "thesis": "Soft, rounded, standard flat SaaS interface with pastel gradients, light gray borders, and zero structural edge.",
+    "palette": [
+      "#ffffff",
+      "#f8fafc",
+      "#475569",
+      "#3b82f6"
+    ],
+    "materials": [
+      "soft rounded cards (radius: 12px)",
+      "diffuse soft gray shadows"
+    ],
+    "viewport": "Typical modern SaaS layout with standard rounded form inputs and blue primary buttons.",
+    "risk": "Bland, generic, and completely devoid of memorable visual conviction.",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  },
+  "steer": true
+}

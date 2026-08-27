@@ -1,0 +1,68 @@
+{
+  "title": "Approve the compositional option",
+  "question": "Select your preferred layout composition for the Jet-Age Ticket Ledger interface.",
+  "options": [
+    {
+      "id": "option-1",
+      "label": "Option 1: The Flight Ledger Stub",
+      "thesis": "Single full-bleed boarding ledger with official rate table, validation stamp marks, and integrated currency conversion stub on the right rail.",
+      "comp": ".impeccable/mocks/option-1.png",
+      "palette": [
+        "#0f172a",
+        "#f8fafc",
+        "#dc2626",
+        "#2563eb",
+        "#6b21a8"
+      ],
+      "materials": [
+        "coupon cardstock",
+        "carbon-copy grid",
+        "ink validation stamps"
+      ],
+      "viewport": "Full-bleed ticket ledger with high-density tabular rate chart and side-by-side tear-off converter cards.",
+      "risk": "Dense tabular view requires clear visual anchors to guide the primary calculation workflow."
+    },
+    {
+      "id": "option-2",
+      "label": "Option 2: The Multi-Coupon Tabbed Booklet",
+      "thesis": "Horizontal ticket wallet with perforated tear-off top tabs for each tool (Revalue Amount, USD Converter, Compare Prices, History Explorer).",
+      "comp": ".impeccable/mocks/option-2.png",
+      "palette": [
+        "#0f172a",
+        "#f8fafc",
+        "#dc2626",
+        "#1e293b"
+      ],
+      "materials": [
+        "perforated tabbed coupons",
+        "receipt notch cutouts",
+        "red official ink stamps"
+      ],
+      "viewport": "Tabbed ticket wallet with distinct coupon tabs at top, active coupon expanding into an ultra-structured calculation matrix.",
+      "risk": "Focuses heavily on one active workflow coupon at a time."
+    },
+    {
+      "id": "option-3",
+      "label": "Option 3: Flight Manifest & Routing Deck",
+      "thesis": "Prominent flight trajectory 75-year exchange rate history chart at top with modular tear-away boarding pass cards below for quick conversion and purchasing power.",
+      "comp": ".impeccable/mocks/option-3.png",
+      "palette": [
+        "#0f172a",
+        "#f8fafc",
+        "#dc2626",
+        "#0284c7"
+      ],
+      "materials": [
+        "flight manifest chart",
+        "boarding pass coupon cards",
+        "barcode/perforated edges"
+      ],
+      "viewport": "Large 75-year historical route trajectory graph anchored above, with modular conversion and revaluation ticket cards below.",
+      "risk": "Splits attention between historical chart and active converter."
+    }
+  ],
+  "buildPath": {
+    "value": "comp",
+    "toggle": false
+  }
+}
